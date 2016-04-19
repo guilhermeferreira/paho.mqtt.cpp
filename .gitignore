@@ -5,4 +5,6 @@ obj/
 src/samples/async_publish
 src/samples/async_subscribe
 src/samples/sync_publish
+src/samples/paho_cpp_pub
+src/samples/paho_cpp_sub
 

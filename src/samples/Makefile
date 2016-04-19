@@ -12,7 +12,7 @@ else
   PAHO_C_INC_DIR ?= /usr/local/include
 endif
 
-SAMPLES = async_publish async_subscribe sync_publish
+SAMPLES = async_publish async_subscribe sync_publish paho_cpp_sub paho_cpp_pub
 
 all: $(SAMPLES)
 
@@ -44,6 +44,12 @@ async_subscribe: async_subscribe.cpp
 
 sync_publish: sync_publish.cpp
 	$(QUIET) $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
+
+paho_cpp_sub: paho_cpp_sub.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
+
+paho_cpp_pub: paho_cpp_pub.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
 
 .PHONY: clean distclean
 
