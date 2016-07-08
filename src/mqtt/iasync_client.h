@@ -60,9 +60,9 @@ class iasync_client
 
 public:
 	/** Type for a collection of filters */
-	using topic_filter_collection = std::vector<std::string>;
+	typedef std::vector<std::string> topic_filter_collection;
 	/** Type for a collection of QOS values */
-	using qos_collection = std::vector<int>;
+	typedef std::vector<QoS> qos_collection;
 
 	/**
 	 * Virtual destructor
@@ -201,7 +201,7 @@ public:
 		const std::string& topic,
 		const void* payload,
 		size_t n,
-		int qos,
+		QoS qos,
 		bool retained
 	) =0;
 	/**
@@ -222,7 +222,7 @@ public:
 		const std::string& topic,
 		const void* payload,
 		size_t n,
-		int qos,
+		QoS qos,
 		bool retained,
 		void* userContext,
 		iaction_listener& cb
@@ -318,7 +318,7 @@ public:
 	 */
 	virtual itoken_ptr subscribe(
 		const std::string& topicFilter,
-		int qos
+		QoS qos
 	) =0;
 	/**
 	 * Subscribe to a topic, which may include wildcards.
@@ -338,7 +338,7 @@ public:
 	 */
 	virtual itoken_ptr subscribe(
 		const std::string& topicFilter,
-		int qos,
+		QoS qos,
 		void* userContext,
 		iaction_listener& callback
 	) =0;
@@ -393,6 +393,9 @@ public:
 		iaction_listener& cb
 	) =0;
 };
+
+/////////////////////////////////////////////////////////////////////////////
+
 
 /////////////////////////////////////////////////////////////////////////////
 // end namespace 'mqtt'
