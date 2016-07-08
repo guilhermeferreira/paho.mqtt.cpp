@@ -21,6 +21,7 @@
 #include <chrono>
 #include <cstring>
 #include "mqtt/async_client.h"
+#include "mqtt/qos.h"
 
 const std::string DFLT_ADDRESS("tcp://localhost:1883");
 const std::string DFLT_CLIENTID("AsyncPublisher");
@@ -34,7 +35,7 @@ const char* PAYLOAD4 = "Someone is always listening.";
 
 const char* LWT_PAYLOAD = "Last will and testament.";
 
-const int  QOS = 1;
+const mqtt::QoS QOS = mqtt::QoS::at_least_once;
 const long TIMEOUT = 10000L;
 
 inline void sleep(int ms) {
@@ -121,7 +122,7 @@ int main(int argc, char* argv[])
 	client.set_callback(cb);
 
 	mqtt::connect_options conopts;
-	mqtt::message willmsg(LWT_PAYLOAD, 1, true);
+	mqtt::message willmsg(LWT_PAYLOAD, mqtt::QoS::at_least_once, true);
 	mqtt::will_options will(TOPIC, willmsg);
 	conopts.set_will(will);
 
