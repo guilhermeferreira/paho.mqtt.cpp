@@ -199,7 +199,7 @@ void async_client::remove_token(itoken* tok)
 
 			if (userCallback_) {
 				const_message_ptr msg = dtok->get_message();
-				if (msg && msg->get_qos() > 0) {
+				if (msg && msg->get_qos() > QoS::at_most_once) {
 					callback* cb = userCallback_;
 					g.unlock();
 					cb->delivery_complete(dtok);
@@ -369,7 +369,7 @@ idelivery_token_ptr async_client::publish(
 	const std::string& topic,
 	const void* payload,
 	size_t n,
-	int qos,
+	QoS qos,
 	bool retained)
 {
 	auto msg = make_message(payload, n, qos, retained);
@@ -380,7 +380,7 @@ idelivery_token_ptr async_client::publish(
 	const std::string& topic,
 	const void* payload,
 	size_t n,
-	int qos,
+	QoS qos,
 	bool retained,
 	void* userContext,
 	iaction_listener& cb)
@@ -455,7 +455,6 @@ void async_client::set_callback(callback& cb)
 itoken_ptr async_client::subscribe(
 	const topic_filter_collection& topicFilters,
 	const qos_collection& qos)
-
 {
 	if (topicFilters.size() != qos.size())
 		throw std::invalid_argument("Collection sizes don't match");
@@ -466,6 +465,18 @@ itoken_ptr async_client::subscribe(
 	add_token(tok);
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
+
+	// TODO Problem - the MQTTAsync_subscribeMany() needs an int array of QoS
+	// elements. But we receive a const std::vector<QoS>. The code must:
+	// 1) Convert the array of QoS to an array o int, because if the C code
+	//    uses pointers to iterate over the array, the QoS array might provide
+	//    elements with different size and the iteration can go wrong.
+	// 2) Create a modifiable array, because the const array might be stored
+	//    in a read-only memory, for example.
+	// The code bellow does not work:
+	//    std::vector<int> vqos(qos.size());
+	//    std::copy(qos.begin(), qos.end(), vqos.begin());
+	static_assert(sizeof(QoS) == sizeof(int), "QoS and int size must match");
 
 	int rc = MQTTAsync_subscribeMany(cli_, static_cast<int>(topicFilters.size()),
 									 static_cast<char**>(&filts[0]),
@@ -500,6 +511,18 @@ itoken_ptr async_client::subscribe(
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
+	// TODO Problem - the MQTTAsync_subscribeMany() needs an int array of QoS
+	// elements. But we receive a const std::vector<QoS>. The code must:
+	// 1) Convert the array of QoS to an array o int, because if the C code
+	//    uses pointers to iterate over the array, the QoS array might provide
+	//    elements with different size and the iteration can go wrong.
+	// 2) Create a modifiable array, because the const array might be stored
+	//    in a read-only memory, for example.
+	// The code bellow does not work:
+	//    std::vector<int> vqos(qos.size());
+	//    std::copy(qos.begin(), qos.end(), vqos.begin());
+	static_assert(sizeof(QoS) == sizeof(int), "QoS and int size must match");
+
 	int rc = MQTTAsync_subscribeMany(cli_, static_cast<int>(topicFilters.size()),
 									 static_cast<char**>(&filts[0]),
 									 const_cast<int*>(&qos[0]), &opts.opts_);
@@ -515,14 +538,15 @@ itoken_ptr async_client::subscribe(
 
 itoken_ptr async_client::subscribe(
 	const std::string& topicFilter,
-	int qos)
+	QoS qos)
 {
 	itoken_ptr tok = std::make_shared<token>(*this, topicFilter);
 	add_token(tok);
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_subscribe(cli_, topicFilter.c_str(), qos, &opts.opts_);
+	int rc = MQTTAsync_subscribe(cli_, topicFilter.c_str(), static_cast<int>(qos),
+								 &opts.opts_);
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -534,7 +558,7 @@ itoken_ptr async_client::subscribe(
 
 itoken_ptr async_client::subscribe(
 	const std::string& topicFilter,
-	int qos,
+	QoS qos,
 	void* userContext,
 	iaction_listener& cb)
 {
@@ -545,7 +569,8 @@ itoken_ptr async_client::subscribe(
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_subscribe(cli_, topicFilter.c_str(), qos, &opts.opts_);
+	int rc = MQTTAsync_subscribe(cli_, topicFilter.c_str(), static_cast<int>(qos),
+								 &opts.opts_);
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);

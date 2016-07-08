@@ -27,7 +27,7 @@ namespace mqtt {
 idelivery_token_ptr topic::publish(
 	const void* payload,
 	size_t n,
-	int qos,
+	QoS qos,
 	bool retained)
 {
 	return cli_->publish(name_, payload, n, qos, retained);

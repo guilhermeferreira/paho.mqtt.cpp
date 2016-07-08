@@ -28,6 +28,7 @@ extern "C" {
 	#include "MQTTAsync.h"
 }
 
+#include "mqtt/qos.h"
 #include "mqtt/token.h"
 #include "mqtt/delivery_token.h"
 #include "mqtt/iclient_persistence.h"
@@ -310,7 +311,7 @@ public:
 		const std::string& topic,
 		const void* payload,
 		size_t n,
-		int qos,
+		QoS qos,
 		bool retained
 	);
 	/**
@@ -332,7 +333,7 @@ public:
 		const std::string& topic,
 		const void* payload,
 		size_t n,
-		int qos,
+		QoS qos,
 		bool retained,
 		void* userContext,
 		iaction_listener& cb
@@ -418,7 +419,10 @@ public:
 	 * @return token used to track and wait for the subscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr subscribe(const std::string& topicFilter, int qos);
+	virtual itoken_ptr subscribe(
+		const std::string& topicFilter,
+		QoS qos
+	);
 	/**
 	 * Subscribe to a topic, which may include wildcards.
 	 * @param topicFilter the topic to subscribe to, which can include
@@ -436,7 +440,7 @@ public:
 	 */
 	virtual itoken_ptr subscribe(
 		const std::string& topicFilter,
-		int qos,
+		QoS qos,
 		void* userContext,
 		iaction_listener& cb
 	);
