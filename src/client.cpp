@@ -120,9 +120,12 @@ void client::publish(const std::string& top, const_message_ptr msg)
 
 void client::publish(const std::string& top, const message& msg)
 {
-	std::shared_ptr<message> msgp(const_cast<message*>(&msg), [](message*){
-		std::cout << "Not destroying non-heap message" << std::endl;
-	});
+	std::shared_ptr<message> msgp{
+		const_cast<message*>(&msg),
+		[](message*) {
+			std::cout << "Not destroying non-heap message" << std::endl;
+		}
+	};
 	cli_.publish(top, msgp)->wait_for_completion(timeout_);
 }
 

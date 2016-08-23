@@ -134,17 +134,17 @@ int iclient_persistence::persistence_get(void* handle, char* key,
 {
 	try {
 		if (handle) {
-			ipersistable_ptr p = static_cast<iclient_persistence*>(handle)->get(key);
+			ipersistable_ptr p{static_cast<iclient_persistence*>(handle)->get(key)};
 
-			size_t	hdrlen = p->get_header_length(),
-					payloadlen = p->get_payload_length();
+			size_t hdrlen{ p->get_header_length() };
+			size_t payloadlen{ p->get_payload_length() };
 
 			if (!p->get_header_bytes()) hdrlen = 0;
 			if (!p->get_payload_bytes()) payloadlen = 0;
 
 			// TODO: Check range
 			*buflen = (int) (hdrlen + payloadlen);
-			char* buf = (char*) malloc(*buflen);
+			char* buf{ static_cast<char*>(malloc(*buflen)) };
 			std::memcpy(buf, p->get_header_bytes(), hdrlen);
 			std::memcpy(buf+hdrlen, p->get_payload_bytes(), payloadlen);
 			*buffer = buf;
@@ -173,9 +173,9 @@ int iclient_persistence::persistence_keys(void* handle, char*** keys, int* nkeys
 {
 	try {
 		if (handle && keys && nkeys) {
-			std::vector<std::string> k(
-				static_cast<iclient_persistence*>(handle)->keys());
-			size_t n = k.size();
+			std::vector<std::string> k{
+				static_cast<iclient_persistence*>(handle)->keys()};
+			size_t n{ k.size() };
 			*nkeys = n;		// TODO: Check range
 			if (n == 0)
 				*keys = nullptr;
