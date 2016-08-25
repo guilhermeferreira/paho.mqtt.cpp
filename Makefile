@@ -147,6 +147,7 @@ dump:
 clean:
 	$(QUIET) $(RM) $(TGT) $(LIB_DIR)/$(LIB_LINK) $(LIB_DIR)/$(LIB_MAJOR_LINK) \
 	    $(OBJS)
+	$(MAKE) -C $(SRC_DIR)/samples clean
 
 .PHONY: distclean
 distclean: clean

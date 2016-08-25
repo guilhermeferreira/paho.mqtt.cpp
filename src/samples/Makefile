@@ -1,5 +1,9 @@
 # Makefile for the paho-mqttpp (C++) sample applications
 
+ifndef VERBOSE
+  QUIET := @
+endif
+
 ifdef DEVELOP
   PAHO_C_LIB_DIR ?= $(abspath ../../../paho.mqtt.c)/build/output
   PAHO_C_INC_DIR ?= $(abspath ../../../paho.mqtt.c)/src
@@ -8,8 +12,9 @@ else
   PAHO_C_INC_DIR ?= /usr/local/include
 endif
 
+SAMPLES = async_publish async_subscribe sync_publish
 
-all: async_publish async_subscribe sync_publish
+all: $(SAMPLES)
 
 ifneq ($(CROSS_COMPILE),)
   CC  = $(CROSS_COMPILE)gcc
@@ -32,18 +37,18 @@ endif
 LDLIBS += -L../../lib -L$(PAHO_C_LIB_DIR) -lpaho-mqttpp3 -lpaho-mqtt3a
 
 async_publish: async_publish.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
+	$(QUIET) $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
 
 async_subscribe: async_subscribe.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
+	$(QUIET) $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
 
 sync_publish: sync_publish.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
+	$(QUIET) $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
 
 .PHONY: clean distclean
 
 clean:
-	rm -f async_publish async_subscribe sync_publish
+	$(QUIET) $(RM) $(SAMPLES)
 
 distclean: clean
 
