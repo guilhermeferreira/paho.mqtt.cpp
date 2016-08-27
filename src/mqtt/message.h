@@ -87,7 +87,12 @@ public:
 	 * @param qos The quality of service for the message.
 	 * @param retained Whether the message should be retained by the broker.
 	 */
-	message(const void* payload, size_t len, int qos, bool retained);
+	message(
+		const void* payload,
+		size_t len,
+		int qos,
+		bool retained
+	);
 	/**
 	 * Constructs a message with the specified string as a payload, and
 	 * all other values set to defaults.
@@ -100,7 +105,11 @@ public:
 	 * @param qos The quality of service for the message.
 	 * @param retained Whether the message should be retained by the broker.
 	 */
-	message(const std::string& payload, int qos, bool retained);
+	message(
+		const std::string& payload,
+		int qos,
+		bool retained
+	);
 	/**
 	 * Constructs a message as a copy of the message structure.
 	 * @param msg A "C" MQTTAsync_message structure.
@@ -212,7 +221,10 @@ using const_message_ptr = message::const_ptr_t;
  * @param payload the bytes to use as the message payload
  * @param n the number of bytes in the payload
  */
-inline message_ptr make_message(const void* payload, size_t len) {
+inline message_ptr make_message(
+	const void* payload,
+	size_t len
+) {
 	return std::make_shared<mqtt::message>(payload, len);
 }
 
@@ -224,8 +236,12 @@ inline message_ptr make_message(const void* payload, size_t len) {
  * @param qos The quality of service for the message.
  * @param retained Whether the message should be retained by the broker.
  */
-inline message_ptr make_message(const void* payload, size_t len,
-								int qos, bool retained) {
+inline message_ptr make_message(
+	const void* payload,
+	size_t len,
+	int qos,
+	bool retained
+) {
 	return std::make_shared<mqtt::message>(payload, len, qos, retained);
 }
 
@@ -245,7 +261,11 @@ inline message_ptr make_message(const std::string& payload) {
  * @param qos The quality of service for the message.
  * @param retained Whether the message should be retained by the broker.
  */
-inline message_ptr make_message(const std::string& payload, int qos, bool retained) {
+inline message_ptr make_message(
+	const std::string& payload,
+	int qos,
+	bool retained
+) {
 	return std::make_shared<mqtt::message>(payload, qos, retained);
 }
 

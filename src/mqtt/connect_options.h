@@ -80,9 +80,9 @@ public:
 	 * Constructs a new object using the specified values.
 	 */
 	connect_options(
-				const std::string& userName,
-				const std::string& password
-				);
+		const std::string& userName,
+		const std::string& password
+	);
 	/**
 	 * Returns the "keep alive" interval.
 	 * @return int

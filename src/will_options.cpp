@@ -30,13 +30,15 @@ will_options::will_options()
 {
 }
 
-will_options::will_options(const std::string& top,
-						   const void *payload,
-						   size_t payload_len,
-						   int qos,
-						   bool retained)
-		: opts_(MQTTAsync_willOptions_initializer), topic_(top),
-			payload_(static_cast<const char *>(payload), payload_len)
+will_options::will_options(
+	const std::string& top,
+	const void *payload,
+	size_t payload_len,
+	int qos,
+	bool retained)
+: opts_(MQTTAsync_willOptions_initializer),
+  topic_(top),
+  payload_(static_cast<const char *>(payload), payload_len)
 {
 	opts_.topicName = topic_.c_str();
 	opts_.message = payload_.c_str();
@@ -44,19 +46,23 @@ will_options::will_options(const std::string& top,
 	opts_.retained = retained;
 }
 
-will_options::will_options(const topic& top,
-						   const void *payload,
-						   size_t payload_len,
-						   int qos, bool retained)
-		: will_options(top.get_name(), payload, payload_len, qos, retained)
+will_options::will_options(
+	const topic& top,
+	const void *payload,
+	size_t payload_len,
+	int qos,
+	bool retained)
+: will_options(top.get_name(), payload, payload_len, qos, retained)
 {
 }
 
 
-will_options::will_options(const std::string& top,
-						   const std::string& payload,
-						   int qos, bool retained)
-		: opts_(MQTTAsync_willOptions_initializer),
+will_options::will_options(
+	const std::string& top,
+	const std::string& payload,
+	int qos,
+	bool retained)
+: opts_(MQTTAsync_willOptions_initializer),
 			topic_(top), payload_(payload)
 {
 	opts_.topicName = topic_.c_str();

@@ -99,21 +99,29 @@ public:
 	 * @param cli The asynchronous client object. 
 	 * @param topic The topic that the message is assocaited with. 
 	 */
-	delivery_token(iasync_client& cli, const std::string& topic) : token(cli, topic) {}
+	delivery_token(
+		iasync_client& cli,
+		const std::string& topic
+	) : token(cli, topic) {}
 	/**
 	 * Creates a delivery token connected to a particular client. 
 	 * @param cli The asynchronous client object. 
 	 * @param topic The topic that the message is assocaited with. 
 	 */
-	delivery_token(iasync_client& cli, const std::string& topic, const_message_ptr msg) 
-			: token(cli, topic), msg_(msg) {}
+	delivery_token(
+		iasync_client& cli,
+		const std::string& topic,
+		const_message_ptr msg
+	) : token(cli, topic), msg_(msg) {}
 	/**
 	 * Creates a delivery token connected to a particular client. 
 	 * @param cli The asynchronous client object. 
 	 * @param topics The topics that the message is assocaited with. 
 	 */
-	delivery_token(iasync_client& cli, const std::vector<std::string>& topics)
-					: token(cli, topics) {}
+	delivery_token(
+		iasync_client& cli,
+		const std::vector<std::string>& topics
+	) : token(cli, topics) {}
 	/**
 	 * Gets the message associated with this token.
 	 * @return The message associated with this token.

@@ -28,20 +28,29 @@ const int client::DFLT_QOS = 1;
 
 /////////////////////////////////////////////////////////////////////////////
 
-client::client(const std::string& serverURI, const std::string& clientId)
-			: cli_(serverURI, clientId), timeout_(-1)
+client::client(
+	const std::string& serverURI,
+	const std::string& clientId)
+: cli_(serverURI, clientId),
+  timeout_(-1)
 {
 }
 
-client::client(const std::string& serverURI, const std::string& clientId,
-			   const std::string& persistDir)
-			: cli_(serverURI, clientId, persistDir), timeout_(-1)
+client::client(
+	const std::string& serverURI,
+	const std::string& clientId,
+	const std::string& persistDir)
+: cli_(serverURI, clientId, persistDir),
+  timeout_(-1)
 {
 }
 
-client::client(const std::string& serverURI, const std::string& clientId,
-			   iclient_persistence* persistence)
-			: cli_(serverURI, clientId, persistence), timeout_(-1)
+client::client(
+	const std::string& serverURI,
+	const std::string& clientId,
+	iclient_persistence* persistence)
+: cli_(serverURI, clientId, persistence),
+  timeout_(-1)
 {
 }
 
@@ -107,18 +116,26 @@ bool client::is_connected() const
 	return cli_.is_connected();
 }
 
-void client::publish(const std::string& top, const void* payload, size_t n,
-					 int qos, bool retained)
+void client::publish(
+	const std::string& top,
+	const void* payload,
+	size_t n,
+	int qos,
+	bool retained)
 {
 	cli_.publish(top, payload, n, qos, retained)->wait_for_completion(timeout_);
 }
 
-void client::publish(const std::string& top, const_message_ptr msg)
+void client::publish(
+	const std::string& top,
+	const_message_ptr msg)
 {
 	cli_.publish(top, msg)->wait_for_completion(timeout_);
 }
 
-void client::publish(const std::string& top, const message& msg)
+void client::publish(
+	const std::string& top,
+	const message& msg)
 {
 	std::shared_ptr<message> msgp(const_cast<message*>(&msg), [](message*){
 		std::cout << "Not destroying non-heap message" << std::endl;
@@ -150,13 +167,16 @@ void client::subscribe(const topic_filter_collection& topicFilters)
 	cli_.subscribe(topicFilters, qos)->wait_for_completion(timeout_);
 }
 
-void client::subscribe(const topic_filter_collection& topicFilters,
-					   const qos_collection& qos)
+void client::subscribe(
+	const topic_filter_collection& topicFilters,
+	const qos_collection& qos)
 {
 	cli_.subscribe(topicFilters, qos)->wait_for_completion(timeout_);
 }
 
-void client::subscribe(const std::string& topicFilter, int qos)
+void client::subscribe(
+	const std::string& topicFilter,
+	int qos)
 {
 	cli_.subscribe(topicFilter, qos)->wait_for_completion(timeout_);
 }

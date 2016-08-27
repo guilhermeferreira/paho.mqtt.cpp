@@ -27,7 +27,9 @@ connect_options::connect_options()
 	opts_.ssl = nullptr;
 }
 
-connect_options::connect_options(const std::string& userName, const std::string& password)
+connect_options::connect_options(
+	const std::string& userName,
+	const std::string& password)
 		: opts_(MQTTAsync_connectOptions_initializer),
 			userName_(userName), password_(password)
 {

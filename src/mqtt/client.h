@@ -67,7 +67,10 @@ public:
 	 * @param serverURI
 	 * @param clientId
 	 */
-	client(const std::string& serverURI, const std::string& clientId);
+	client(
+		const std::string& serverURI,
+		const std::string& clientId
+	);
 	/**
 	 * Create a client that can be used to communicate with an MQTT server.
 	 * This uses file-based persistence in the specified directory.
@@ -75,8 +78,11 @@ public:
 	 * @param clientId
 	 * @param persistDir
 	 */
-	client(const std::string& serverURI, const std::string& clientId,
-		   const std::string& persistDir);
+	client(
+		const std::string& serverURI,
+		const std::string& clientId,
+		const std::string& persistDir
+	);
 	/**
 	 * Create a client that can be used to communicate with an MQTT server.
 	 * This allows the caller to specify a user-defined persistance object,
@@ -86,8 +92,11 @@ public:
 	 * @param persistence The user persistence structure. If this is null,
 	 *  				  then no persistence is used.
 	 */
-	client(const std::string& serverURI, const std::string& clientId,
-		   iclient_persistence* persistence);
+	client(
+		const std::string& serverURI,
+		const std::string& clientId,
+		iclient_persistence* persistence
+	);
 
 	/**
 	 * Virtual destructor
@@ -159,20 +168,31 @@ public:
 	 * @param qos
 	 * @param retained
 	 */
-	virtual void publish(const std::string& top, const void* payload, size_t n,
-						 int qos, bool retained);
+	virtual void publish(
+		const std::string& top,
+		const void* payload,
+		size_t n,
+		int qos,
+		bool retained
+	);
 	/**
 	 * Publishes a message to a topic on the server.
 	 * @param top The topic to publish on
 	 * @param msg The message
 	 */
-	virtual void publish(const std::string& top, const_message_ptr msg);
+	virtual void publish(
+		const std::string& top,
+		const_message_ptr msg
+	);
 	/**
 	 * Publishes a message to a topic on the server.
 	 * @param top The topic to publish on
 	 * @param msg The message
 	 */
-	virtual void publish(const std::string& top, const message& msg);
+	virtual void publish(
+		const std::string& top,
+		const message& msg
+	);
 	/**
 	 * Sets the callback listener to use for events that happen
 	 * asynchronously.
@@ -198,14 +218,19 @@ public:
 	 * Subscribes to multiple topics, each of which may include wildcards.
 	 * @param string
 	 */
-	virtual void subscribe(const topic_filter_collection& topicFilters,
-						   const qos_collection& qos);
+	virtual void subscribe(
+		const topic_filter_collection& topicFilters,
+		const qos_collection& qos
+	);
 	/**
 	 * Subscribe to a topic, which may include wildcards.
 	 * @param topicFilter
 	 * @param qos
 	 */
-	virtual void subscribe(const std::string& topicFilter, int qos);
+	virtual void subscribe(
+		const std::string& topicFilter,
+		int qos
+	);
 	/**
 	 * Requests the server unsubscribe the client from a topic.
 	 * @param topicFilter
