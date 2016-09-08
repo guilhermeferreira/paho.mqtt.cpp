@@ -1,0 +1,25 @@
+log_type error
+log_type warning
+log_type notice
+log_type information
+log_type debug
+
+allow_anonymous true
+
+# non-SSL listener
+listener 18883
+
+# listener for mutual authentication
+listener 18884
+cafile %PWD%/ca.crt
+certfile %PWD%/server.crt
+keyfile %PWD%/server.key
+require_certificate true
+
+# server authentication - no client authentication
+listener 18885
+tls_version tlsv1.1
+cafile %PWD%/ca.crt
+certfile %PWD%/server.crt
+keyfile %PWD%/server.key
+require_certificate false

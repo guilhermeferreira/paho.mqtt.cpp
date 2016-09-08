@@ -9,7 +9,7 @@ else
 endif
 
 
-all: async_publish async_subscribe sync_publish
+all: async_publish async_subscribe sync_publish asyncssl_publish asyncssl_subscribe
 
 ifneq ($(CROSS_COMPILE),)
   CC  = $(CROSS_COMPILE)gcc
@@ -20,6 +20,7 @@ endif
 
 CXXFLAGS += -Wall -std=c++11
 CPPFLAGS += -I.. -I$(PAHO_C_INC_DIR)
+CPPFLAGS += -I../../ssl
 
 ifdef DEBUG
   CPPFLAGS += -DDEBUG
@@ -30,6 +31,7 @@ else
 endif
 
 LDLIBS += -L../../lib -L$(PAHO_C_LIB_DIR) -lpaho-mqttpp3 -lpaho-mqtt3a
+LDSSLLIBS := -L../../lib  -L$(PAHO_C_LIB_DIR) -lpaho-mqttpp3 -lpaho-mqtt3as
 
 async_publish: async_publish.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
@@ -39,6 +41,12 @@ async_subscribe: async_subscribe.cpp
 
 sync_publish: sync_publish.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
+
+asyncssl_publish: asyncssl_publish.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDSSLLIBS)
+
+asyncssl_subscribe: asyncssl_subscribe.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDSSLLIBS)
 
 .PHONY: clean distclean
 

@@ -2,4 +2,7 @@ lib/
 obj/
 \.hg/
 \.hgignore
-
+src/samples/asyncssl_publish
+src/samples/asyncssl_subscribe
+ssl/cert.h
+ssl/mosquitto.conf
