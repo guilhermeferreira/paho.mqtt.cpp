@@ -36,7 +36,7 @@ async_client::async_client(const std::string& serverURI, const std::string& clie
 				: serverURI_(serverURI), clientId_(clientId),
 					persist_(nullptr), userCallback_(nullptr)
 {
-	MQTTAsync_create(&cli_, serverURI.c_str(), clientId.c_str(),
+	MQTTAsync_create(&cli_, serverURI_.c_str(), clientId_.c_str(),
 					 MQTTCLIENT_PERSISTENCE_DEFAULT, nullptr);
 }
 
@@ -46,7 +46,7 @@ async_client::async_client(const std::string& serverURI, const std::string& clie
 				: serverURI_(serverURI), clientId_(clientId),
 					persist_(nullptr), userCallback_(nullptr)
 {
-	MQTTAsync_create(&cli_, serverURI.c_str(), clientId.c_str(),
+	MQTTAsync_create(&cli_, serverURI_.c_str(), clientId_.c_str(),
 					 MQTTCLIENT_PERSISTENCE_DEFAULT, const_cast<char*>(persistDir.c_str()));
 }
 
@@ -56,7 +56,7 @@ async_client::async_client(const std::string& serverURI, const std::string& clie
 					persist_(nullptr), userCallback_(nullptr)
 {
 	if (!persistence) {
-		MQTTAsync_create(&cli_, serverURI.c_str(), clientId.c_str(),
+		MQTTAsync_create(&cli_, serverURI_.c_str(), clientId_.c_str(),
 						 MQTTCLIENT_PERSISTENCE_NONE, nullptr);
 	}
 	else {
