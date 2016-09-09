@@ -134,11 +134,18 @@ public:
 		opts_.cleansession = (cleanSession) ? (!0) : 0;
 	}
 	/**
-	 * Sets the connection timeout value.
+	 * Sets the connection timeout value in seconds.
 	 * @param timeout
 	 */
-	void set_connection_timeout(int timeout) {
-		opts_.connectTimeout = timeout;
+	void set_connection_timeout(int timeout_in_secs) {
+		opts_.connectTimeout = timeout_in_secs;
+	}
+	/**
+	 * Sets the retry interval time in seconds.
+	 * @param interval
+	 */
+	void set_retry_interval(int interval_in_secs) {
+		opts_.retryInterval = interval_in_secs;
 	}
 	/**
 	 * Sets the "keep alive" interval.
