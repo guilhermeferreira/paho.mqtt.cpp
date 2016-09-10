@@ -67,14 +67,18 @@ void token::on_failure(MQTTAsync_failureData* rsp)
 {
 	guard g(lock_);
 	iaction_listener* listener = listener_;
+
 	if (rsp) {
 		tok_ = rsp->token;
 		rc_ = rsp->code;
+		message_ = rsp->message;
 	}
 	else {
 		tok_ = 0;
 		rc_ = -1;
+		message_ = "unknown";
 	}
+
 	complete_ = true;
 	g.unlock();
 
@@ -113,16 +117,12 @@ token::token(iasync_client& cli, const std::vector<std::string>& topics)
 {
 }
 
-//exception token::get_exception()
-//{
-//}
-
 void token::wait_for_completion()
 {
 	guard g(lock_);
 	cond_.wait(g, [this]{return complete_;});
 	if (rc_ != MQTTASYNC_SUCCESS)
-		throw exception(rc_);
+		throw exception(rc_, message_);
 }
 
 void token::wait_for_completion(long timeout)
@@ -141,7 +141,7 @@ void token::wait_for_completion(long timeout)
 			throw exception(MQTTASYNC_FAILURE);	// TODO: Get a timout error number
 	}
 	if (rc_ != MQTTASYNC_SUCCESS)
-		throw exception(rc_);
+		throw exception(rc_, message_);
 }
 
 /////////////////////////////////////////////////////////////////////////////

@@ -152,6 +152,8 @@ class token : public virtual itoken
 	bool complete_;
 	/** The action success/failure code */
 	int rc_;
+	/** Paho MQTT C error message **/
+	std::string message_;
 
 	/** Client has special access for full initialization */
 	friend class async_client;

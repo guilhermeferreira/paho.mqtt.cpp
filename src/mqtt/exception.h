@@ -46,10 +46,15 @@ class exception : public std::runtime_error
 {
 	/** The error code from the C library */
 	int code_;
+	/** The error message from the C library **/
+	std::string message_;
 
 public:
 	explicit exception(int reasonCode) : std::runtime_error("mqtt::exception"),
 											code_(reasonCode) {}
+
+	exception(int reasonCode, std::string message) : std::runtime_error("mqtt::exception"),
+												code_(reasonCode), message_(message) {}
 	/**
 	 * Returns the detail message for this exception.
 	 */
@@ -68,7 +73,8 @@ public:
 	 * @return const char* 
 	 */
 	virtual const char* what() const noexcept {
-		return (std::string("MQTT exception ")+std::to_string(code_)).c_str();
+		return (std::string("MQTT exception (") + std::to_string(code_) +
+				std::string(") - ") + std::string(message_)).c_str();
 	}
 };
 
