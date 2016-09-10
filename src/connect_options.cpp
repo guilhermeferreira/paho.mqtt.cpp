@@ -47,13 +47,13 @@ void connect_options::set_user_name(const std::string& userName)
 	opts_.username = userName_.c_str();
 }
 
-void connect_options::set_will(const will_options& will)
+void connect_options::set_will_options(const will_options& will)
 {
 	will_ = will;
 	opts_.will = &will_.opts_;
 }
 
-void connect_options::set_ssl(const ssl_options& ssl)
+void connect_options::set_ssl_options(const ssl_options& ssl)
 {
 	ssl_ = ssl;
 	opts_.ssl = &ssl_.opts_;

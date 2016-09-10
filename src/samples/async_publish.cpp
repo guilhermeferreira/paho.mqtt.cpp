@@ -123,7 +123,7 @@ int main(int argc, char* argv[])
 	mqtt::connect_options conopts;
 	mqtt::message willmsg(LWT_PAYLOAD, 1, true);
 	mqtt::will_options will(TOPIC, willmsg);
-	conopts.set_will(will);
+	conopts.set_will_options(will);
 
 	std::cout << "...OK" << std::endl;
 

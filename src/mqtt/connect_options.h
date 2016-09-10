@@ -120,6 +120,11 @@ public:
 	 */
 	const will_options& get_will_options() const { return will_; }
 	/**
+	 * Get the SSL options to use for the connection.
+	 * @return The SSL options to use for the connection.
+	 */
+	const ssl_options& get_ssl_options() const { return ssl_; }
+	/**
 	 * Returns whether the server should remember state for the client
 	 * across reconnects.
 	 * @return bool
@@ -167,12 +172,12 @@ public:
 	 * Sets the "Last Will and Testament" (LWT) for the connection.
 	 * @param will The LWT options.
 	 */
-	void set_will(const will_options& will);
+	void set_will_options(const will_options& will);
 	/**
 	 * Sets the SSL for the connection.
 	 * @param ssl The SSL options.
 	 */
-	void set_ssl(const ssl_options& ssl);
+	void set_ssl_options(const ssl_options& ssl);
 
 	std::string to_str() const;
 };
