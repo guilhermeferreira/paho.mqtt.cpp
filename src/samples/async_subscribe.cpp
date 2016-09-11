@@ -23,7 +23,7 @@
 #include <chrono>
 #include "mqtt/async_client.h"
 
-const std::string ADDRESS("tcp://localhost:1883");
+const std::string DFLT_ADDRESS("tcp://localhost:1883");
 const std::string CLIENTID("AsyncSubcriber");
 const std::string TOPIC("hello");
 
@@ -134,7 +134,9 @@ int main(int argc, char* argv[])
 	connOpts.set_keep_alive_interval(20);
 	connOpts.set_clean_session(true);
 
-	mqtt::async_client client(ADDRESS, CLIENTID);
+	std::string address  = (argc > 1) ? std::string(argv[1]) : DFLT_ADDRESS;
+
+	mqtt::async_client client(address, CLIENTID);
 
 	callback cb(client, connOpts);
 	client.set_callback(cb);
@@ -147,7 +149,7 @@ int main(int argc, char* argv[])
 		client.connect(connOpts, nullptr, cb);
 	}
 	catch (const mqtt::exception& exc) {
-		std::cerr << "\nERROR: Unable to connect to MQTT server: " << ADDRESS << std::endl;
+		std::cerr << "\nERROR: Unable to connect to MQTT server: " << address << std::endl;
 		return 1;
 	}
 
