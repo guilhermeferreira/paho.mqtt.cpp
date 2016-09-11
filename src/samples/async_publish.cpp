@@ -112,8 +112,8 @@ public:
 
 int main(int argc, char* argv[])
 {
-	std::string address  = (argc > 1) ? std::string(argv[1]) : DFLT_ADDRESS,
-				clientID = (argc > 1) ? std::string(argv[2]) : DFLT_CLIENTID;
+	std::string address  = (argc > 1) ? std::string(argv[1]) : DFLT_ADDRESS;
+	std::string clientID = (argc > 2) ? std::string(argv[2]) : DFLT_CLIENTID;
 
 	std::cout << "Initializing..." << std::endl;
 	mqtt::async_client client(address, clientID);
