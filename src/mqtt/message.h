@@ -44,7 +44,7 @@ namespace mqtt {
 class message
 {
 	/** The underlying C message struct */
-	MQTTAsync_message msg_;
+	MQTTAsync_message msg_ { MQTTAsync_message_initializer };
 	/**
 	 * The message payload.
 	 * Note that this is not necessarily a printable text string, but rather

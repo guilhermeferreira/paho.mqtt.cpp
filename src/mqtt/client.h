@@ -46,7 +46,7 @@ class client
 	/**
 	 * The longest amount of time to wait for an operation (in milliseconds)
 	 */
-	int timeout_;
+	int timeout_ { -1 };
 
 	/** Non-copyable */
 	client() =delete;

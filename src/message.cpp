@@ -25,18 +25,16 @@ namespace mqtt {
 
 /////////////////////////////////////////////////////////////////////////////
 
-message::message() : msg_(MQTTAsync_message_initializer)
+message::message()
 {
 }
 
 message::message(const void* payload, size_t len)
-						: msg_(MQTTAsync_message_initializer)
 {
 	set_payload(payload, len);
 }
 
 message::message(const void* payload, size_t len, int qos, bool retained)
-						: msg_(MQTTAsync_message_initializer)
 {
 	set_payload(payload, len);
 	set_qos(qos);
@@ -44,13 +42,11 @@ message::message(const void* payload, size_t len, int qos, bool retained)
 }
 
 message::message(const std::string& payload)
-						: msg_(MQTTAsync_message_initializer)
 {
 	set_payload(payload);
 }
 
 message::message(const std::string& payload, int qos, bool retained)
-						: msg_(MQTTAsync_message_initializer)
 {
 	set_payload(payload);
 	set_qos(qos);

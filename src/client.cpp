@@ -29,19 +29,19 @@ const int client::DFLT_QOS = 1;
 /////////////////////////////////////////////////////////////////////////////
 
 client::client(const std::string& serverURI, const std::string& clientId)
-			: cli_(serverURI, clientId), timeout_(-1)
+			: cli_(serverURI, clientId)
 {
 }
 
 client::client(const std::string& serverURI, const std::string& clientId,
 			   const std::string& persistDir)
-			: cli_(serverURI, clientId, persistDir), timeout_(-1)
+			: cli_(serverURI, clientId, persistDir)
 {
 }
 
 client::client(const std::string& serverURI, const std::string& clientId,
 			   iclient_persistence* persistence)
-			: cli_(serverURI, clientId, persistence), timeout_(-1)
+			: cli_(serverURI, clientId, persistence)
 {
 }
 

@@ -141,17 +141,17 @@ class token : public virtual itoken
 	/** The MQTT client that is processing this action */
 	iasync_client* cli_;
 	/** User supplied context */
-	void* userContext_;
+	void* userContext_ { nullptr };
 	/**
 	 * User supplied listener.
 	 * Note that the user listener fires after the action is marked
 	 * complete, but before the token is signaled.
 	 */
-	iaction_listener* listener_;
+	iaction_listener* listener_ { nullptr };
 	/** Whether the action has yet to complete */
-	bool complete_;
+	bool complete_ { false };
 	/** The action success/failure code */
-	int rc_;
+	int rc_ { 0 };
 
 	/** Client has special access for full initialization */
 	friend class async_client;

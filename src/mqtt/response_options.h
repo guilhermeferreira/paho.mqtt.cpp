@@ -26,7 +26,7 @@ namespace mqtt {
 class response_options
 {
 	/** The underlying C structure */
-	MQTTAsync_responseOptions opts_;
+	MQTTAsync_responseOptions opts_ { MQTTAsync_responseOptions_initializer };
 
 	/** The client has special access */
 	friend class async_client;
@@ -67,7 +67,7 @@ public:
 class delivery_response_options
 {
 	/** The underlying C structure */
-	MQTTAsync_responseOptions opts_;
+	MQTTAsync_responseOptions opts_ { MQTTAsync_responseOptions_initializer };
 
 	/** The client has special access */
 	friend class async_client;

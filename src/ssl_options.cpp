@@ -24,7 +24,7 @@ namespace mqtt {
 
 /////////////////////////////////////////////////////////////////////////////
 
-ssl_options::ssl_options() : opts_(MQTTAsync_SSLOptions_initializer)
+ssl_options::ssl_options()
 {
 }
 

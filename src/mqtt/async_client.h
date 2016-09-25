@@ -73,9 +73,9 @@ private:
 	/** The client ID string that we provided to the server. */
 	std::string clientId_;
 	/** A user persistence wrapper (if any) */
-	MQTTClient_persistence* persist_;
+	MQTTClient_persistence* persist_ { nullptr };
 	/** Callback supplied by the user (if any) */
-	callback* userCallback_;
+	callback* userCallback_ { nullptr };
 	/** A list of tokens that are in play */
 	std::list<itoken_ptr> pendingTokens_;
 	/** A list of delivery tokens that are in play */

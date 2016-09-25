@@ -46,7 +46,7 @@ class connect_options;
 class will_options
 {
 	/** The underlying C LWT options */
-	MQTTAsync_willOptions opts_;
+	MQTTAsync_willOptions opts_ { MQTTAsync_willOptions_initializer };
 
 	/** LWT message topic **/
 	std::string topic_;

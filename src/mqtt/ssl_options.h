@@ -47,7 +47,7 @@ class connect_options;
 class ssl_options
 {
 	/** The underlying C SSL options */
-	MQTTAsync_SSLOptions opts_;
+	MQTTAsync_SSLOptions opts_ { MQTTAsync_SSLOptions_initializer };
 
 	/**
 	 * The file containing the public digital certificates trusted by

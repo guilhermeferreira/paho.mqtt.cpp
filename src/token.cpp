@@ -86,36 +86,24 @@ void token::on_failure(MQTTAsync_failureData* rsp)
 
 // --------------------------------------------------------------------------
 
-token::token(iasync_client& cli) : tok_(MQTTAsync_token(0)), cli_(&cli), 
-						userContext_(nullptr), listener_(nullptr),
-						complete_(false), rc_(0)
+token::token(iasync_client& cli) : tok_(MQTTAsync_token(0)), cli_(&cli)
 {
 }
 
-token::token(iasync_client& cli, MQTTAsync_token tok) : tok_(tok), cli_(&cli), 
-						userContext_(nullptr), listener_(nullptr),
-						complete_(false), rc_(0)
+token::token(iasync_client& cli, MQTTAsync_token tok) : tok_(tok), cli_(&cli)
 {
 }
 
 token::token(iasync_client& cli, const std::string& top)
-				: tok_(MQTTAsync_token(0)), cli_(&cli), 
-						userContext_(nullptr), listener_(nullptr),
-						complete_(false), rc_(0)
+				: tok_(MQTTAsync_token(0)), cli_(&cli)
 {
 	topics_.push_back(top);
 }
 
 token::token(iasync_client& cli, const std::vector<std::string>& topics)
-				: tok_(MQTTAsync_token(0)), topics_(topics), cli_(&cli), 
-						userContext_(nullptr), listener_(nullptr),
-						complete_(false), rc_(0)
+				: tok_(MQTTAsync_token(0)), topics_(topics), cli_(&cli)
 {
 }
-
-//exception token::get_exception()
-//{
-//}
 
 void token::wait_for_completion()
 {

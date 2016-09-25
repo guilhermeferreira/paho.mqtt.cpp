@@ -26,7 +26,6 @@ const MQTTAsync_willOptions will_options::DFLT_C_WILL(MQTTAsync_willOptions_init
 /////////////////////////////////////////////////////////////////////////////
 
 will_options::will_options()
-		: opts_(MQTTAsync_willOptions_initializer)
 {
 }
 
@@ -35,7 +34,7 @@ will_options::will_options(const std::string& top,
 						   size_t payload_len,
 						   int qos,
 						   bool retained)
-		: opts_(MQTTAsync_willOptions_initializer), topic_(top),
+		: topic_(top),
 			payload_(static_cast<const char *>(payload), payload_len)
 {
 	opts_.topicName = topic_.c_str();
@@ -56,8 +55,7 @@ will_options::will_options(const topic& top,
 will_options::will_options(const std::string& top,
 						   const std::string& payload,
 						   int qos, bool retained)
-		: opts_(MQTTAsync_willOptions_initializer),
-			topic_(top), payload_(payload)
+		: topic_(top), payload_(payload)
 {
 	opts_.topicName = topic_.c_str();
 	opts_.message = payload_.c_str();
