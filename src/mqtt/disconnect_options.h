@@ -36,7 +36,7 @@ public:
 	 * Creates disconnect options tied to the specific delivery token.
 	 * @param tok A token to be used as the context.
 	 */
-	disconnect_options(int timeout, token* tok);
+	disconnect_options(int timeout, token_ptr tok);
 	/**
 	 * Sets the timeout for disconnecting. 
 	 * This allows for any remaining in-flight messages to be delivered. 
@@ -52,7 +52,7 @@ public:
 	 * Sets the callback context to a delivery token. 
 	 * @param tok The delivery token to be used as the callback context.
 	 */
-	void set_context(token* tok);
+	void set_context(token_ptr tok);
 };
 
 /////////////////////////////////////////////////////////////////////////////

@@ -87,7 +87,7 @@ public:
 	 *  				  then no persistence is used.
 	 */
 	client(const std::string& serverURI, const std::string& clientId,
-		   iclient_persistence* persistence);
+		   iclient_persistence_ptr persistence);
 
 	/**
 	 * Virtual destructor

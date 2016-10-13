@@ -41,6 +41,10 @@ extern "C" {
 namespace mqtt {
 
 class iasync_client;
+/** Smart/shared pointer to a iasync_client object */
+using iasync_client_ptr = std::shared_ptr<iasync_client>;
+/** Smart/shared pointer to a const iasync_client object */
+using const_iasync_client_ptr = std::shared_ptr<const iasync_client>;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -60,18 +64,13 @@ public:
 	 * Return the async listener for this token.
 	 * @return iaction_listener
 	 */
-	virtual iaction_listener* get_action_callback() const =0;
+	virtual iaction_listener_ptr get_action_callback() const =0;
 	/**
 	 * Returns the MQTT client that is responsible for processing the
 	 * asynchronous action.
 	 * @return iasync_client
 	 */
-	virtual iasync_client* get_client() const =0;
-	/**
-	 * Returns an exception providing more detail if an operation failed.
-	 * @return Exception
-	 */
-	//virtual exception get_exception() =0;
+	virtual iasync_client_ptr get_client() const =0;
 	/**
 	 * Returns the message ID of the message that is associated with the
 	 * token.
@@ -139,7 +138,7 @@ class token : public virtual itoken
 	/** The topic string(s) for the action being tracked by this token */
 	std::vector<std::string> topics_;
 	/** The MQTT client that is processing this action */
-	iasync_client* cli_;
+	iasync_client_ptr cli_;
 	/** User supplied context */
 	void* userContext_;
 	/**
@@ -147,7 +146,7 @@ class token : public virtual itoken
 	 * Note that the user listener fires after the action is marked
 	 * complete, but before the token is signaled.
 	 */
-	iaction_listener* listener_;
+	iaction_listener_ptr listener_;
 	/** Whether the action has yet to complete */
 	bool complete_;
 	/** The action success/failure code */
@@ -228,7 +227,7 @@ public:
 	 * Return the async listener for this token.
 	 * @return iaction_listener
 	 */
-	virtual iaction_listener* get_action_callback() const {
+	virtual iaction_listener_ptr get_action_callback() const {
 		// TODO: Guard?
 		return listener_;
 	}
@@ -237,8 +236,8 @@ public:
 	 * asynchronous action.
 	 * @return iasync_client
 	 */
-	virtual iasync_client* get_client() const {
-		return (iasync_client*) cli_;
+	virtual iasync_client_ptr get_client() const {
+		return cli_;
 	}
 	/**
 	 * Returns an exception providing more detail if an operation failed.
@@ -276,7 +275,7 @@ public:
 	 */
 	virtual void set_action_callback(iaction_listener& listener) {
 		guard g(lock_);
-		listener_ = &listener;
+		listener_.reset(&listener);
 	}
 	/**
 	 * Store some context associated with an action.

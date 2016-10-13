@@ -35,6 +35,7 @@
 #include "mqtt/callback.h"
 #include <string>
 #include <vector>
+#include <memory>
 
 namespace mqtt {
 
@@ -56,9 +57,15 @@ namespace mqtt {
 class iasync_client
 {
 	friend class token;
-	virtual void remove_token(itoken* tok) =0;
+	virtual void remove_token(itoken_ptr tok) =0;
 
 public:
+	/** Smart pointer to an object of this class */
+	using ptr_t = std::shared_ptr<iasync_client>;
+	/** Smart pointer to an object of this class */
+	using const_ptr_t = std::shared_ptr<const iasync_client>;
+
+
 	/** Type for a collection of filters */
 	using topic_filter_collection = std::vector<std::string>;
 	/** Type for a collection of QOS values */
@@ -345,6 +352,13 @@ public:
 	virtual itoken_ptr unsubscribe(const std::string& topicFilter,
 								   void* userContext, iaction_listener& cb) =0;
 };
+
+
+/** Smart/shared pointer to a iasync_client object */
+using iasync_client_ptr = iasync_client::ptr_t;
+
+/** Smart/shared pointer to a const iasync_client object */
+using const_iasync_client_ptr = iasync_client::const_ptr_t;
 
 /////////////////////////////////////////////////////////////////////////////
 // end namespace 'mqtt'

@@ -145,8 +145,8 @@ public:
 int main(int argc, char* argv[])
 {
 	std::cout << "Initialzing..." << std::endl;
-	sample_mem_persistence persist;
-	mqtt::client client(ADDRESS, CLIENTID, &persist);
+	std::shared_ptr<sample_mem_persistence> persist = std::make_shared<sample_mem_persistence>();
+	mqtt::client client(ADDRESS, CLIENTID, persist);
 
 	callback cb;
 	client.set_callback(cb);

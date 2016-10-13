@@ -149,7 +149,7 @@ public:
 	 *  				  then no persistence is used.
 	 */
 	async_client(const std::string& serverURI, const std::string& clientId,
-				 iclient_persistence* persistence);
+				 iclient_persistence_ptr persistence);
 	/**
 	 * Destructor
 	 */

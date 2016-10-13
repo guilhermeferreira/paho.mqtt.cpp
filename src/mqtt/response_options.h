@@ -40,19 +40,13 @@ public:
 	 * Creates a response object with the specified callbacks. 
 	 * @param dtok A token to be used as the context.
 	 */
-	response_options(token* tok);
-
-	#if 0
-	MQTTAsync_responseOptions* c_ptr() { return &opts_; }
-	const MQTTAsync_responseOptions* c_ptr() const { return &opts_; }
-	#endif
-
+	response_options(token_ptr tok);
 	/**
 	 * Sets the callback context to a generic token. 
 	 * @param tok The token to be used as the callback context.
 	 */
-	void set_context(token* tok) {
-		opts_.context = tok;
+	void set_context(token_ptr tok) {
+		opts_.context = tok.get();
 	}
 };
 
@@ -81,13 +75,13 @@ public:
 	 * Creates a response object tied to the specific delivery token.
 	 * @param dtok A delivery token to be used as the context.
 	 */
-	delivery_response_options(delivery_token* dtok);
+	delivery_response_options(delivery_token_ptr dtok);
 	/**
 	 * Sets the callback context to a delivery token. 
 	 * @param tok The delivery token to be used as the callback context.
 	 */
-	void set_context(delivery_token* dtok) { 
-		opts_.context = dtok;
+	void set_context(delivery_token_ptr dtok) {
+		opts_.context = dtok.get();
 	}
 };
 

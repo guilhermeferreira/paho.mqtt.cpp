@@ -11,16 +11,16 @@ disconnect_options::disconnect_options()
 {
 }
 
-disconnect_options::disconnect_options(int timeout, token* tok)
+disconnect_options::disconnect_options(int timeout, token_ptr tok)
 		: disconnect_options()
 {
 	set_timeout(timeout);
 	set_context(tok);
 }
 
-void disconnect_options::set_context(token* tok) 
+void disconnect_options::set_context(token_ptr tok)
 {
-	opts_.context = tok;
+	opts_.context = tok.get();
 
 	if (tok) {
 		opts_.onSuccess = &token::on_success;

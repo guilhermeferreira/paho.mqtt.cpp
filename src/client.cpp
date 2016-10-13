@@ -40,7 +40,7 @@ client::client(const std::string& serverURI, const std::string& clientId,
 }
 
 client::client(const std::string& serverURI, const std::string& clientId,
-			   iclient_persistence* persistence)
+			   iclient_persistence_ptr persistence)
 			: cli_(serverURI, clientId, persistence), timeout_(-1)
 {
 }

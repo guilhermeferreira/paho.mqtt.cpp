@@ -13,7 +13,7 @@ response_options::response_options()
 	opts_.onFailure = &token::on_failure;
 }
 
-response_options::response_options(token* tok)
+response_options::response_options(token_ptr tok)
 		: response_options()
 {
 	set_context(tok);
@@ -28,7 +28,7 @@ delivery_response_options::delivery_response_options()
 	opts_.onFailure = &delivery_token::on_failure;
 }
 
-delivery_response_options::delivery_response_options(delivery_token* tok)
+delivery_response_options::delivery_response_options(delivery_token_ptr tok)
 		: delivery_response_options()
 {
 	set_context(tok);

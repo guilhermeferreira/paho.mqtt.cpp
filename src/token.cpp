@@ -31,7 +31,7 @@ namespace mqtt {
 void token::on_failure(void* context, MQTTAsync_failureData* rsp) 
 {
 	if (context) {
-		token* tok = static_cast<token*>(context);
+		token_ptr tok{ static_cast<token*>(context) };
 		tok->on_failure(rsp);
 		tok->get_client()->remove_token(tok);
 	}
@@ -40,7 +40,7 @@ void token::on_failure(void* context, MQTTAsync_failureData* rsp)
 void token::on_success(void* context, MQTTAsync_successData* rsp) 
 {
 	if (context) {
-		token* tok = static_cast<token*>(context);
+		token_ptr tok{ static_cast<token*>(context) };
 		tok->on_success(rsp);
 		tok->get_client()->remove_token(tok);
 	}
@@ -51,7 +51,7 @@ void token::on_success(void* context, MQTTAsync_successData* rsp)
 void token::on_success(MQTTAsync_successData* rsp) 
 {
 	guard g(lock_);
-	iaction_listener* listener = listener_;
+	iaction_listener_ptr listener{ listener_ };
 	tok_ = (rsp) ? rsp->token : 0;
 	rc_ = MQTTASYNC_SUCCESS;
 	complete_ = true;
@@ -66,7 +66,7 @@ void token::on_success(MQTTAsync_successData* rsp)
 void token::on_failure(MQTTAsync_failureData* rsp)
 {
 	guard g(lock_);
-	iaction_listener* listener = listener_;
+	iaction_listener_ptr listener = listener_;
 	if (rsp) {
 		tok_ = rsp->token;
 		rc_ = rsp->code;
@@ -112,10 +112,6 @@ token::token(iasync_client& cli, const std::vector<std::string>& topics)
 						complete_(false), rc_(0)
 {
 }
-
-//exception token::get_exception()
-//{
-//}
 
 void token::wait_for_completion()
 {
