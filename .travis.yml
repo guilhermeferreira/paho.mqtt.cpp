@@ -1,0 +1,27 @@
+language: cpp
+
+install:
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update -qq
+  - if [ "$CXX" = "g++" ]; then sudo apt-get install -qq g++-4.8; fi
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+
+addons:
+  apt:
+    packages:
+      - cppcheck
+      - libcppunit-dev
+      - git
+
+compiler:
+  - g++
+
+os:
+  - linux
+
+script:
+  - git clone https://github.com/guilhermeferreira/paho.mqtt.c.git && cd paho.mqtt.c && git checkout -t origin/build-autotools && ./bootstrap && ./configure --prefix=/tmp/paho-c && make && make install&& cd ..
+  - make PAHO_C_INC_DIR=/tmp/paho-c/include/ PAHO_C_LIB_DIR=/tmp/paho-c/lib
+  - make PAHO_C_INC_DIR=/tmp/paho-c/include/ PAHO_C_LIB_DIR=/tmp/paho-c/lib PAHO_CPP_LIB_DIR=../../lib test
+  - cppcheck --enable=all --std=c++11 --force --quiet src/*.cpp
+
