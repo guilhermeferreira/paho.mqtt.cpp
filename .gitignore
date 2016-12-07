@@ -2,4 +2,4 @@ lib/
 obj/
 \.hg/
 \.hgignore
-
+\test/unit/mqttpp-unittest
