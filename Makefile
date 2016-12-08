@@ -158,8 +158,15 @@ samples: $(SRC_DIR)/samples $(LIB_DIR)/$(LIB_LINK)
 	$(MAKE) -C $<
 
 .PHONY: test
-test: $(TEST_DIR)/unit $(LIB_DIR)/$(LIB_LINK)
+test-unit: $(TEST_DIR)/unit $(LIB_DIR)/$(LIB_LINK)
 	$(MAKE) -C $<
+
+.PHONY: test
+test-regression: $(TEST_DIR)/regression $(LIB_DIR)/$(LIB_LINK)
+	$(MAKE) -C $<
+
+.PHONY: test
+test: test-unit test-regression
 
 # ----- Installation targets -----
 

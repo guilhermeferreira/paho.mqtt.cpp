@@ -3,3 +3,5 @@ obj/
 \.hg/
 \.hgignore
 \test/unit/mqttpp-unittest
+\test/regression/test_async_publish
+\test/regression/test_async_subscribe
