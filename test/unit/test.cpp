@@ -21,6 +21,7 @@
 #include "will_options_test.h"
 #include "ssl_options_test.h"
 #include "connect_options_test.h"
+#include "disconnect_options_test.h"
 
 using namespace CppUnit;
 
@@ -32,6 +33,7 @@ int main(int argc, char* argv[])
 	CPPUNIT_TEST_SUITE_REGISTRATION( will_options_test );
 	CPPUNIT_TEST_SUITE_REGISTRATION( ssl_options_test );
 	CPPUNIT_TEST_SUITE_REGISTRATION( connect_options_test );
+	CPPUNIT_TEST_SUITE_REGISTRATION( disconnect_options_test );
 
 	TextUi::TestRunner runner;
 	TestFactoryRegistry &registry = TestFactoryRegistry::getRegistry();
@@ -39,4 +41,3 @@ int main(int argc, char* argv[])
 	runner.addTest(registry.makeTest());
 	return (runner.run()) ? 0 : 1;
 }
-
