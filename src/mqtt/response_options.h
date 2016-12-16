@@ -28,9 +28,6 @@ class response_options
 	/** The underlying C structure */
 	MQTTAsync_responseOptions opts_;
 
-	/** The client has special access */
-	friend class async_client;
-
 public:
 	/**
 	 * Create an empty response object.
@@ -41,12 +38,13 @@ public:
 	 * @param tok A token to be used as the context.
 	 */
 	response_options(token* tok);
-
-	#if 0
-	MQTTAsync_responseOptions* c_ptr() { return &opts_; }
-	const MQTTAsync_responseOptions* c_ptr() const { return &opts_; }
-	#endif
-
+	/**
+	 * Returns the underlying Paho MQTT C struct
+	 * @return MQTTAsync_responseOptions
+	 */
+	MQTTAsync_responseOptions& get_c_struct() {
+		return opts_;
+	}
 	/**
 	 * Sets the callback context to a generic token. 
 	 * @param tok The token to be used as the callback context.
@@ -69,9 +67,6 @@ class delivery_response_options
 	/** The underlying C structure */
 	MQTTAsync_responseOptions opts_;
 
-	/** The client has special access */
-	friend class async_client;
-
 public:
 	/**
 	 * Create an empty delivery response object.
@@ -83,7 +78,14 @@ public:
 	 */
 	delivery_response_options(delivery_token* dtok);
 	/**
-	 * Sets the callback context to a delivery token. 
+	 * Returns the underlying Paho MQTT C struct
+	 * @return MQTTAsync_responseOptions
+	 */
+	MQTTAsync_responseOptions& get_c_struct() {
+		return opts_;
+	}
+	/**
+	 * Sets the callback context to a delivery token.
 	 * @param dtok The delivery token to be used as the callback context.
 	 */
 	void set_context(delivery_token* dtok) { 

@@ -68,9 +68,6 @@ class connect_options
 	/** The password to use for the connection. */
 	std::string password_;
 
-	/** The client has special access */
-	friend class async_client;
-
 public:
 	/** Smart/shared pointer to an object of this class. */
 	using ptr_t = std::shared_ptr<connect_options>;
@@ -131,6 +128,13 @@ public:
 	 */
 	const ssl_options& get_ssl_options() const { return ssl_; }
 #endif
+	/**
+	 * Returns the underlying Paho MQTT C struct
+	 * @return MQTTAsync_connectOptions
+	 */
+	MQTTAsync_connectOptions& get_c_struct() {
+		return opts_;
+	}
 	/**
 	 * Returns whether the server should remember state for the client
 	 * across reconnects.

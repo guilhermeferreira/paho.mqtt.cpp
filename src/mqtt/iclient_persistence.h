@@ -56,10 +56,7 @@ namespace mqtt {
  */
 class iclient_persistence
 {
-	friend class iasync_client;
-
 public:
-
 	/** C-callbacks  */
 	static int persistence_open(void** handle, const char* clientID, const char* serverURI, void* context);
 	static int persistence_close(void* handle);

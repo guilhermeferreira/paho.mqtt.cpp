@@ -52,9 +52,6 @@ class message
 	 */
 	std::string payload_;
 
-	/** The client has special access. */
-	friend class async_client;
-
 	/**
 	 * Set the dup flag in the underlying message
 	 * @param dup
@@ -145,6 +142,13 @@ public:
 	 * @return The quality of service for this message.
 	 */
 	int get_qos() const { return msg_.qos; }
+	/**
+	 * Returns the underlying Paho MQTT C struct
+	 * @return MQTTAsync_message
+	 */
+	const MQTTAsync_message& get_c_struct() const {
+		return msg_;
+	}
 	/**
 	 * Returns whether or not this message might be a duplicate of one which
 	 * has already been received.

@@ -113,10 +113,6 @@ token::token(iasync_client& cli, const std::vector<std::string>& topics)
 {
 }
 
-//exception token::get_exception()
-//{
-//}
-
 void token::wait_for_completion()
 {
 	guard g(lock_);

@@ -24,9 +24,6 @@ class disconnect_options
 {
 	MQTTAsync_disconnectOptions opts_;
 
-	/** The client has special access */
-	friend class async_client;
-
 public:
 	/**
 	 * Create an empty delivery response object.
@@ -37,6 +34,13 @@ public:
 	 * @param tok A token to be used as the context.
 	 */
 	disconnect_options(int timeout, token* tok);
+	/**
+	 * Returns the underlying Paho MQTT C struct
+	 * @return MQTTAsync_disconnectOptions
+	 */
+	MQTTAsync_disconnectOptions& get_c_struct() {
+		return opts_;
+	}
 	/**
 	 * Sets the timeout for disconnecting. 
 	 * This allows for any remaining in-flight messages to be delivered. 

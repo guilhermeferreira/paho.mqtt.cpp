@@ -60,7 +60,7 @@ void connect_options::set_will(const will_options& will)
 void connect_options::set_ssl(const ssl_options& ssl)
 {
 	ssl_ = ssl;
-	opts_.ssl = &ssl_.opts_;
+	opts_.ssl = &ssl_.get_c_struct();
 }
 #endif
 
