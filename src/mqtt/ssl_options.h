@@ -70,9 +70,6 @@ class ssl_options
 	 */
 	std::string enabledCipherSuites_;
 
-	/** The connect options has special access */
-	friend class connect_options;
-
 public:
 	/** Smart/shared pointer to an object of this class. */
 	using ptr_t = std::shared_ptr<ssl_options>;
@@ -159,6 +156,13 @@ public:
 	 */
 	bool get_enable_server_cert_auth() const {
 		return opts_.enableServerCertAuth != 0;
+	}
+	/**
+	 * Returns the underlying Paho MQTT C struct
+	 * @return MQTTAsync_SSLOptions
+	 */
+	MQTTAsync_SSLOptions& get_c_struct() {
+		return opts_;
 	}
 	/**
 	 * Sets the file containing the public digital certificates trusted by

@@ -28,9 +28,6 @@ class delivery_response_options
 	/** The underlying C structure */
 	MQTTAsync_responseOptions opts_;
 
-	/** The client has special access */
-	friend class async_client;
-
 public:
 	/**
 	 * Create an empty delivery response object.
@@ -41,6 +38,13 @@ public:
 	 * @param dtok A delivery token to be used as the context.
 	 */
 	delivery_response_options(delivery_token* dtok);
+	/**
+	 * Returns the underlying Paho MQTT C struct
+	 * @return MQTTAsync_responseOptions
+	 */
+	MQTTAsync_responseOptions& get_c_struct() {
+		return opts_;
+	}
 	/**
 	 * Sets the callback context to a delivery token.
 	 * @param tok The delivery token to be used as the callback context.

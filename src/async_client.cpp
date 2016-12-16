@@ -234,9 +234,9 @@ itoken_ptr async_client::connect(connect_options opts)
 	itoken_ptr tok = std::make_shared<token>(*this);
 	add_token(tok);
 
-	opts.opts_.context = dynamic_cast<token*>(tok.get());
+	opts.set_context(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_connect(cli_, &opts.opts_);
+	int rc = MQTTAsync_connect(cli_, &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -254,9 +254,9 @@ itoken_ptr async_client::connect(connect_options opts, void* userContext,
 	tok->set_action_callback(cb);
 	add_token(tok);
 
-	opts.opts_.context = dynamic_cast<token*>(tok.get()); 
+	opts.set_context(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_connect(cli_, &opts.opts_);
+	int rc = MQTTAsync_connect(cli_, &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -269,8 +269,8 @@ itoken_ptr async_client::connect(connect_options opts, void* userContext,
 itoken_ptr async_client::connect(void* userContext, iaction_listener& cb)
 {
 	connect_options opts;
-	opts.opts_.keepAliveInterval = 30;
-	opts.opts_.cleansession = 1;
+	opts.set_keep_alive_interval(30);
+	opts.set_clean_session(true);
 	return connect(opts, userContext, cb);
 }
 
@@ -284,7 +284,7 @@ itoken_ptr async_client::disconnect(long timeout)
 
 	disconnect_options opts(int(timeout), dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_disconnect(cli_, &opts.opts_);
+	int rc = MQTTAsync_disconnect(cli_, &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -303,7 +303,7 @@ itoken_ptr async_client::disconnect(long timeout, void* userContext, iaction_lis
 
 	disconnect_options opts(int(timeout), dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_disconnect(cli_, &opts.opts_);
+	int rc = MQTTAsync_disconnect(cli_, &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -372,8 +372,8 @@ idelivery_token_ptr async_client::publish(const std::string& topic, const_messag
 
 	delivery_response_options opts { dynamic_cast<delivery_token*>(tok.get()) };
 
-	int rc = MQTTAsync_sendMessage(cli_, (char*) topic.c_str(), &(msg->msg_), 
-								   &opts.opts_);
+	int rc = MQTTAsync_sendMessage(cli_, const_cast<char*>(topic.c_str()), &(msg->get_c_struct()),
+								   &opts.get_c_struct());
 
 	opts.update_message_id();
 
@@ -395,8 +395,8 @@ idelivery_token_ptr async_client::publish(const std::string& topic, const_messag
 
 	delivery_response_options opts(dynamic_cast<delivery_token*>(tok.get()));
 
-	int rc = MQTTAsync_sendMessage(cli_, (char*) topic.c_str(), &(msg->msg_), 
-								   &opts.opts_);
+	int rc = MQTTAsync_sendMessage(cli_, const_cast<char*>(topic.c_str()), &(msg->get_c_struct()),
+								   &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -439,8 +439,8 @@ itoken_ptr async_client::subscribe(const topic_filter_collection& topicFilters,
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_subscribeMany(cli_, (int) topicFilters.size(),
-									 (char**) &filts[0], (int*) &qos[0], &opts.opts_);
+	int rc = MQTTAsync_subscribeMany(cli_, static_cast<int>(topicFilters.size()),
+									 static_cast<char**>(&filts[0]), const_cast<int*>(&qos[0]), &opts.get_c_struct());
 
 	free_topic_filters(filts);
 	if (rc != MQTTASYNC_SUCCESS) {
@@ -469,8 +469,8 @@ itoken_ptr async_client::subscribe(const topic_filter_collection& topicFilters,
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_subscribeMany(cli_, (int) topicFilters.size(),
-									 (char**) &filts[0], (int*) &qos[0], &opts.opts_);
+	int rc = MQTTAsync_subscribeMany(cli_, static_cast<int>(topicFilters.size()),
+									 static_cast<char**>(&filts[0]), const_cast<int*>(&qos[0]), &opts.get_c_struct());
 
 	free_topic_filters(filts);
 	if (rc != MQTTASYNC_SUCCESS) {
@@ -488,7 +488,7 @@ itoken_ptr async_client::subscribe(const std::string& topicFilter, int qos)
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_subscribe(cli_, (char*) topicFilter.c_str(), qos, &opts.opts_);
+	int rc = MQTTAsync_subscribe(cli_, const_cast<char*>(topicFilter.c_str()), qos, &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -508,7 +508,7 @@ itoken_ptr async_client::subscribe(const std::string& topicFilter, int qos,
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_subscribe(cli_, (char*) topicFilter.c_str(), qos, &opts.opts_);
+	int rc = MQTTAsync_subscribe(cli_, const_cast<char*>(topicFilter.c_str()), qos, &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -528,7 +528,7 @@ itoken_ptr async_client::unsubscribe(const std::string& topicFilter)
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_unsubscribe(cli_, (char*) topicFilter.c_str(), &opts.opts_);
+	int rc = MQTTAsync_unsubscribe(cli_, const_cast<char*>(topicFilter.c_str()), &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);
@@ -548,7 +548,7 @@ itoken_ptr async_client::unsubscribe(const topic_filter_collection& topicFilters
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_unsubscribeMany(cli_, (int) n, (char**) &filts[0], &opts.opts_);
+	int rc = MQTTAsync_unsubscribeMany(cli_, static_cast<int>(n), static_cast<char**>(&filts[0]), &opts.get_c_struct());
 
 	free_topic_filters(filts);
 	if (rc != MQTTASYNC_SUCCESS) {
@@ -572,7 +572,7 @@ itoken_ptr async_client::unsubscribe(const topic_filter_collection& topicFilters
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_unsubscribeMany(cli_, (int) n, (char**) &filts[0], &opts.opts_);
+	int rc = MQTTAsync_unsubscribeMany(cli_, static_cast<int>(n), static_cast<char**>(&filts[0]), &opts.get_c_struct());
 
 	free_topic_filters(filts);
 	if (rc != MQTTASYNC_SUCCESS) {
@@ -593,7 +593,7 @@ itoken_ptr async_client::unsubscribe(const std::string& topicFilter,
 
 	response_options opts(dynamic_cast<token*>(tok.get()));
 
-	int rc = MQTTAsync_unsubscribe(cli_, (char*) topicFilter.c_str(), &opts.opts_);
+	int rc = MQTTAsync_unsubscribe(cli_, const_cast<char*>(topicFilter.c_str()), &opts.get_c_struct());
 
 	if (rc != MQTTASYNC_SUCCESS) {
 		remove_token(tok);

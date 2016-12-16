@@ -162,14 +162,14 @@ public:
 	 * @return iasync_client
 	 */
 	iasync_client* get_client() const override {
-		return (iasync_client*) cli_;
+		return cli_;
 	}
 	/**
 	 * Returns the message ID of the message that is associated with the
 	 * token.
 	 * @return int
 	 */
-	int get_message_id() const override { return int(tok_); }
+	int get_message_id() const override { return static_cast<int>(tok_); }
 	/**
 	 * Returns the topic string(s) for the action being tracked by this
 	 * token.
