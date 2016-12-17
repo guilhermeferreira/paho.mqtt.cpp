@@ -141,15 +141,31 @@ public:
 	 * Sets the connection timeout value.
 	 * @param timeout
 	 */
-	void set_connection_timeout(int timeout) {
+	void set_connection_timeout(int timeout) { // TODO 35.2.1
 		opts_.connectTimeout = timeout;
+	}
+	/**
+	 * Sets the connection timeout value.
+	 * @param timeout
+	 */
+	template <class Rep, class Period>
+	void set_connection_timeout(const std::chrono::duration<Rep, Period>& timeout) {
+		set_connection_timeout(static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(timeout).count()));
 	}
 	/**
 	 * Sets the "keep alive" interval.
 	 * @param keepAliveInterval
 	 */
-	void set_keep_alive_interval(int keepAliveInterval) {
+	void set_keep_alive_interval(int keepAliveInterval) { // TODO 35.2.1
 		opts_.keepAliveInterval = keepAliveInterval;
+	}
+	/**
+	 * Sets the "keep alive" interval.
+	 * @param keepAliveInterval
+	 */
+	template <class Rep, class Period>
+	void set_keep_alive_interval(const std::chrono::duration<Rep, Period>& keepAliveInterval) {
+		set_keep_alive_interval(static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(keepAliveInterval).count()));
 	}
 	/**
 	 * Sets the password to use for the connection.

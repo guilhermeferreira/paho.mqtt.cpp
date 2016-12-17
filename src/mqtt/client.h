@@ -26,6 +26,7 @@
 
 #include "async_client.h"
 
+#include <chrono>
 #include <string>
 #include <memory>
 
@@ -46,7 +47,7 @@ class client
 	/**
 	 * The longest amount of time to wait for an operation (in milliseconds)
 	 */
-	int timeout_;
+	int timeout_; // TODO 35.2.1
 
 	/** Non-copyable */
 	client() =delete;
@@ -115,6 +116,15 @@ public:
 	 * Disconnects from the server.
 	 */
 	virtual void disconnect(int quiesceTimeout);
+	/**
+	 * Disconnects from the server.
+	 *
+	 * @param quiesceTimeout timeout in any time unit
+	 */
+	template <class Rep, class Period>
+	void disconnect(const std::chrono::duration<Rep, Period>& quiesceTimeout) {
+		disconnect(static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(quiesceTimeout).count()));
+	}
 	/**
 	 * Returns a randomly generated client identifier based on the current
 	 * user's login name and the system time.

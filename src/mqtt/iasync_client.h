@@ -33,6 +33,8 @@
 #include "mqtt/exception.h"
 #include "mqtt/message.h"
 #include "mqtt/callback.h"
+
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -139,6 +141,22 @@ public:
 	 * @throw exception for problems encountered while disconnecting
 	 */
 	virtual itoken_ptr disconnect(int quiesceTimeout, void* userContext, iaction_listener& cb) =0;
+	/**
+	 * Disconnects from the server.
+	 *
+	 * @param quiesceTimeout the amount of time (in any unit) to allow for
+	 *  					 existing work to finish before disconnecting. A
+	 *  					 value of zero or less means the client will not
+	 *  					 quiesce.
+	 * @return Token used to track and wait for disconnect to complete. The
+	 *  	   token will be passed to the callback methods if a callback is
+	 *  	   set.
+	 * @throw exception for problems encountered while disconnecting
+	 */
+	template <class Rep, class Period>
+	itoken_ptr disconnect(const std::chrono::duration<Rep, Period>& quiesceTimeout) {
+		return disconnect(static_cast<int>(std::chrono::duration_cast<std::chrono::milliseconds>(quiesceTimeout).count()));
+	}
 	/**
 	 * Disconnects from the server.
 	 * @param userContext optional object used to pass context to the

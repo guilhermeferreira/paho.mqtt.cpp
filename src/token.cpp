@@ -121,7 +121,7 @@ void token::wait_for_completion()
 		throw exception(rc_);
 }
 
-void token::wait_for_completion(long timeout)
+void token::wait_for_completion(long timeout) // TODO 35.2.1
 {
 	guard g(lock_);
 	if (timeout == 0) {			// No wait. Are we done now?

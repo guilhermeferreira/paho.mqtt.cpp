@@ -131,7 +131,7 @@ void client::set_callback(callback& cb)
 	cli_.set_callback(cb);
 }
 
-void client::set_time_to_wait(int timeout)
+void client::set_time_to_wait(int timeout) // TODO 35.2.1
 {
 	timeout_ = timeout;
 }

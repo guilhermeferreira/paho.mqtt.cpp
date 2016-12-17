@@ -11,7 +11,7 @@ disconnect_options::disconnect_options()
 {
 }
 
-disconnect_options::disconnect_options(int timeout, token* tok)
+disconnect_options::disconnect_options(int timeout, token* tok) // TODO 35.2.1
 		: disconnect_options()
 {
 	set_timeout(timeout);

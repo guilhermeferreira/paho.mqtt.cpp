@@ -30,6 +30,7 @@ extern "C" {
 
 #include "mqtt/iaction_listener.h"
 #include "mqtt/exception.h"
+#include <chrono>
 #include <string>
 #include <vector>
 #include <memory>
@@ -105,7 +106,17 @@ public:
 	 * with has completed.
 	 * @param timeout The timeout (in milliseconds)
 	 */
-	virtual void wait_for_completion(long timeout) =0;
+	virtual void wait_for_completion(long timeout) =0; // TODO 35.2.1
+	/**
+	 * Waits a relative amount of time for the action to complete.
+	 * @param relTime The amount of time to wait for the event.
+	 * @return @em true if the event gets signaled in the specified time,
+	 *  	   @em false on a timeout.
+	 */
+	template <class Rep, class Period>
+	void wait_for_completion(const std::chrono::duration<Rep, Period>& relTime) {
+		wait_for_completion(static_cast<long>(std::chrono::duration_cast<std::chrono::milliseconds>(relTime).count()));
+	}
 };
 
 using itoken_ptr = itoken::ptr_t;
