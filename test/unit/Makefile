@@ -37,12 +37,17 @@ else
   CXXFLAGS += -O2
 endif
 
+ifdef COVERAGE
+CXXFLAGS += -fprofile-arcs -ftest-coverage
+LDFLAGS += -fprofile-arcs -pg -lgcov
+endif
+
 LDLIBS += -L$(PAHO_CPP_LIB_DIR) -lpaho-mqttpp3
 LDLIBS += -L$(PAHO_C_LIB_DIR) -lpaho-mqtt3a
 LDLIBS += -lcppunit -ldl
 
 $(TGT): test.cpp $(HDR_TESTS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS) $(LDFLAGS)
 
 run: $(TGT)
 	LD_LIBRARY_PATH=$(PAHO_C_LIB_DIR):$(PAHO_CPP_LIB_DIR) ./$(TGT)
