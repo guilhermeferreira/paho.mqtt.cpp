@@ -1,9 +1,11 @@
 # Makefile for the paho-mqttpp (C++) unit tests
 
 ifdef DEVELOP
+  PAHO_CPP_LIB_DIR ?= $(abspath ../..)/lib
   PAHO_C_LIB_DIR ?= $(abspath ../../../paho.mqtt.c)/build/output
   PAHO_C_INC_DIR ?= $(abspath ../../../paho.mqtt.c)/src
 else
+  PAHO_CPP_LIB_DIR ?= /usr/local/lib
   PAHO_C_LIB_DIR ?= /usr/local/lib
   PAHO_C_INC_DIR ?= /usr/local/include
 endif
@@ -33,7 +35,9 @@ else
   CXXFLAGS += -O2
 endif
 
-LDLIBS += -L../../lib -L$(PAHO_C_LIB_DIR) -lpaho-mqttpp3 -lpaho-mqtt3a -lcppunit -ldl
+LDLIBS += -L$(PAHO_CPP_LIB_DIR) -lpaho-mqttpp3
+LDLIBS += -L$(PAHO_C_LIB_DIR) -lpaho-mqtt3a
+LDLIBS += -lcppunit -ldl
 
 $(TGT): test.cpp $(HDR_TESTS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)
