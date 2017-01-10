@@ -216,7 +216,7 @@ public:
 	 *  	   set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	itoken_ptr disconnect(long quiesceTimeout) override;
+	itoken_ptr disconnect(int quiesceTimeout) override;
 	/**
 	 * Disconnects from the server.
 	 *
@@ -233,7 +233,7 @@ public:
 	 *  	   a callback is set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	itoken_ptr disconnect(long quiesceTimeout, void* userContext,
+	itoken_ptr disconnect(int quiesceTimeout, void* userContext,
 								  iaction_listener& cb) override;
 	/**
 	 * Disconnects from the server.

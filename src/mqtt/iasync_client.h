@@ -126,7 +126,7 @@ public:
 	 *  	   The token will be passed to any callback that has been set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	virtual itoken_ptr disconnect(long quiesceTimeout) =0;
+	virtual itoken_ptr disconnect(int quiesceTimeout) =0;
 	/**
 	 * Disconnects from the server.
 	 * @param quiesceTimeout
@@ -138,7 +138,7 @@ public:
 	 *  	   The token will be passed to any callback that has been set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	virtual itoken_ptr disconnect(long quiesceTimeout, void* userContext, iaction_listener& cb) =0;
+	virtual itoken_ptr disconnect(int quiesceTimeout, void* userContext, iaction_listener& cb) =0;
 	/**
 	 * Disconnects from the server.
 	 * @param userContext optional object used to pass context to the

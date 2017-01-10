@@ -114,7 +114,7 @@ public:
 	/**
 	 * Disconnects from the server.
 	 */
-	virtual void disconnect(long quiesceTimeout);
+	virtual void disconnect(int quiesceTimeout);
 	/**
 	 * Returns a randomly generated client identifier based on the current
 	 * user's login name and the system time.
