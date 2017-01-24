@@ -208,7 +208,7 @@ std::vector<char*> async_client::alloc_topic_filters(
 	std::vector<char*> filts;
 	for (const auto& t : topicFilters) {
 		char* filt = new char[t.size()+1];
-		std::strcpy(filt, t.c_str());
+		std::copy(t.c_str(), t.c_str() + t.size(), filt);
 		filts.push_back(filt);
 	}
 	return filts;
