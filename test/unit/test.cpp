@@ -23,6 +23,7 @@
 #include "connect_options_test.h"
 #include "disconnect_options_test.h"
 #include "response_options_test.h"
+#include "delivery_response_options_test.h"
 #include "iclient_persistence_test.h"
 
 using namespace CppUnit;
@@ -37,6 +38,7 @@ int main(int argc, char* argv[])
 	CPPUNIT_TEST_SUITE_REGISTRATION( connect_options_test );
 	CPPUNIT_TEST_SUITE_REGISTRATION( disconnect_options_test );
 	CPPUNIT_TEST_SUITE_REGISTRATION( response_options_test );
+	CPPUNIT_TEST_SUITE_REGISTRATION( delivery_response_options_test );
 	CPPUNIT_TEST_SUITE_REGISTRATION( iclient_persistence_test );
 
 	TextUi::TestRunner runner;
