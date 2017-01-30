@@ -26,6 +26,7 @@
 #include "delivery_response_options_test.h"
 #include "iclient_persistence_test.h"
 #include "token_test.h"
+#include "topic_test.h"
 
 using namespace CppUnit;
 
@@ -42,6 +43,7 @@ int main(int argc, char* argv[])
 	CPPUNIT_TEST_SUITE_REGISTRATION( delivery_response_options_test );
 	CPPUNIT_TEST_SUITE_REGISTRATION( iclient_persistence_test );
 	CPPUNIT_TEST_SUITE_REGISTRATION( token_test );
+	CPPUNIT_TEST_SUITE_REGISTRATION( topic_test );
 
 	TextUi::TestRunner runner;
 	TestFactoryRegistry &registry = TestFactoryRegistry::getRegistry();
