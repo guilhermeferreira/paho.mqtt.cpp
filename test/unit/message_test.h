@@ -33,7 +33,11 @@ class message_test : public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE( message_test );
 
 	CPPUNIT_TEST( test_dflt_constructor );
+	CPPUNIT_TEST( test_buf_len_constructor  );
 	CPPUNIT_TEST( test_buf_constructor  );
+	CPPUNIT_TEST( test_string_constructor  );
+	CPPUNIT_TEST( test_string_qos_constructor );
+	CPPUNIT_TEST( test_c_struct_constructor  );
 	CPPUNIT_TEST( test_copy_constructor );
 	CPPUNIT_TEST( test_move_constructor );
 	CPPUNIT_TEST( test_copy_assignment  );
@@ -49,23 +53,39 @@ class message_test : public CppUnit::TestFixture
 	const std::string PAYLOAD = std::string(BUF);
 	const int QOS = 1;
 
-	mqtt::message msg_;
+	mqtt::message orgMsg;
 
 public:
 	void setUp() {
-		msg_ = mqtt::message(PAYLOAD, QOS, true);
+		orgMsg = mqtt::message(PAYLOAD, QOS, true);
 	}
 	void tearDown() {}
 
-	// ----------------------------------------------------------------------
+// ----------------------------------------------------------------------
+// Test the default constructor
+// ----------------------------------------------------------------------
 
-	// Test the default constructor
 	void test_dflt_constructor() {
 		mqtt::message msg;
 		CPPUNIT_ASSERT_EQUAL(EMPTY_STR, msg.get_payload());
 	}
 
-	// Test the raw buffer (void*) constructor
+// ----------------------------------------------------------------------
+// Test the raw buffer (void*) and length constructor
+// ----------------------------------------------------------------------
+
+	void test_buf_len_constructor() {
+		mqtt::message msg(BUF, N);
+
+		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
+		CPPUNIT_ASSERT_EQUAL(DFLT_QOS, msg.get_qos());
+		CPPUNIT_ASSERT(!msg.is_retained());
+	}
+
+// ----------------------------------------------------------------------
+// Test the raw buffer (void*) constructor
+// ----------------------------------------------------------------------
+
 	void test_buf_constructor() {
 		mqtt::message msg(BUF, N, QOS, true);
 
@@ -74,7 +94,23 @@ public:
 		CPPUNIT_ASSERT(msg.is_retained());
 	}
 
+// ----------------------------------------------------------------------
+// Test the string buffer constructor
+// ----------------------------------------------------------------------
+
 	void test_string_constructor() {
+		mqtt::message msg(PAYLOAD);
+
+		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
+		CPPUNIT_ASSERT_EQUAL(DFLT_QOS, msg.get_qos());
+		CPPUNIT_ASSERT(!msg.is_retained());
+	}
+
+// ----------------------------------------------------------------------
+// Test the string buffer with QoS constructor
+// ----------------------------------------------------------------------
+
+	void test_string_qos_constructor() {
 		mqtt::message msg(PAYLOAD, QOS, true);
 
 		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
@@ -82,52 +118,80 @@ public:
 		CPPUNIT_ASSERT(msg.is_retained());
 	}
 
-	// Test the copy constructor
+// ----------------------------------------------------------------------
+// Test the initialization by C struct
+// ----------------------------------------------------------------------
+
+	void test_c_struct_constructor() {
+		MQTTAsync_message c_msg = MQTTAsync_message_initializer;
+		c_msg.payload = const_cast<char*>(BUF);
+		c_msg.payloadlen = N;
+		c_msg.qos = QOS;
+		c_msg.retained = 1;
+		c_msg.dup = 1;
+		mqtt::message msg(c_msg);
+
+		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
+		CPPUNIT_ASSERT_EQUAL(QOS, msg.get_qos());
+		CPPUNIT_ASSERT(msg.is_retained());
+		CPPUNIT_ASSERT(msg.is_duplicate());
+	}
+
+// ----------------------------------------------------------------------
+// Test the copy constructor
+// ----------------------------------------------------------------------
+
 	void test_copy_constructor() {
-		mqtt::message msg(msg_);
+		mqtt::message msg(orgMsg);
 
 		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
 		CPPUNIT_ASSERT_EQUAL(QOS, msg.get_qos());
 		CPPUNIT_ASSERT(msg.is_retained());
 
 		// Make sure it's a true copy, not linked to the original
-		msg_.set_payload("");
-		msg_.set_qos(0);
-		msg_.set_retained(false);
+		orgMsg.set_payload(EMPTY_STR);
+		orgMsg.set_qos(DFLT_QOS);
+		orgMsg.set_retained(false);
 
 		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
 		CPPUNIT_ASSERT_EQUAL(QOS, msg.get_qos());
 		CPPUNIT_ASSERT(msg.is_retained());
 	}
 
-	// Test the move constructor
+// ----------------------------------------------------------------------
+// Test the move constructor
+// ----------------------------------------------------------------------
+
 	void test_move_constructor() {
-		mqtt::message msg(std::move(msg_));
+		mqtt::message msg(std::move(orgMsg));
 
 		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
 		CPPUNIT_ASSERT_EQUAL(QOS, msg.get_qos());
 		CPPUNIT_ASSERT(msg.is_retained());
 
 		// Check that the original was moved
-		CPPUNIT_ASSERT_EQUAL(EMPTY_STR, msg_.get_payload());
-		CPPUNIT_ASSERT_EQUAL(0, msg_.get_qos());
-		CPPUNIT_ASSERT(!msg_.is_retained());
+		CPPUNIT_ASSERT_EQUAL(EMPTY_STR, orgMsg.get_payload());
+		CPPUNIT_ASSERT_EQUAL(DFLT_QOS, orgMsg.get_qos());
+		CPPUNIT_ASSERT(!orgMsg.is_retained());
 	}
 
-	// Test the copy assignment operator=(const&)
+// ----------------------------------------------------------------------
+// Test the copy assignment operator=(const&)
+// ----------------------------------------------------------------------
+
 	void test_copy_assignment() {
 		mqtt::message msg;
 
-		msg = msg_;
+		msg = orgMsg;
 
 		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
 		CPPUNIT_ASSERT_EQUAL(QOS, msg.get_qos());
 		CPPUNIT_ASSERT(msg.is_retained());
 
 		// Make sure it's a true copy, not linked to the original
-		msg_.set_payload("");
-		msg_.set_qos(0);
-		msg_.set_retained(false);
+		orgMsg.set_payload(EMPTY_STR);
+		orgMsg.set_qos(DFLT_QOS);
+		orgMsg.set_retained(false);
 
 		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
 		CPPUNIT_ASSERT_EQUAL(QOS, msg.get_qos());
@@ -141,20 +205,23 @@ public:
 		CPPUNIT_ASSERT(msg.is_retained());
 	}
 
-	// Test the move assignment, operator=(&&)
+// ----------------------------------------------------------------------
+// Test the move assignment, operator=(&&)
+// ----------------------------------------------------------------------
+
 	void test_move_assignment() {
 		mqtt::message msg;
 
-		msg = std::move(msg_);
+		msg = std::move(orgMsg);
 
 		CPPUNIT_ASSERT_EQUAL(PAYLOAD, msg.get_payload());
 		CPPUNIT_ASSERT_EQUAL(QOS, msg.get_qos());
 		CPPUNIT_ASSERT(msg.is_retained());
 
 		// Check that the original was moved
-		CPPUNIT_ASSERT_EQUAL(EMPTY_STR, msg_.get_payload());
-		CPPUNIT_ASSERT_EQUAL(0, msg_.get_qos());
-		CPPUNIT_ASSERT(!msg_.is_retained());
+		CPPUNIT_ASSERT_EQUAL(EMPTY_STR, orgMsg.get_payload());
+		CPPUNIT_ASSERT_EQUAL(DFLT_QOS, orgMsg.get_qos());
+		CPPUNIT_ASSERT(!orgMsg.is_retained());
 
 		// Self assignment should cause no harm
 		msg = std::move(msg);
