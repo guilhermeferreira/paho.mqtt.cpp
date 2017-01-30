@@ -86,9 +86,7 @@ public:
 	 *
 	 * @return delivery_token
 	 */
-	idelivery_token_ptr publish(const std::string& str, int qos, bool retained) {
-		return publish(str.data(), str.length(), qos, retained);
-	}
+	idelivery_token_ptr publish(const std::string& str, int qos, bool retained);
 	/**
 	 * Publishes the specified message to this topic, but does not wait for
 	 * delivery of the message to complete.
