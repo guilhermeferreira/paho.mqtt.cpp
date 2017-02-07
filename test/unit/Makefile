@@ -41,7 +41,7 @@ else
   PAHO_C_LIB ?= paho-mqtt3a
 endif
 
-LDLIBS += -L../../lib -L$(PAHO_C_LIB_DIR) -lpaho-mqttpp3 -l$(PAHO_C_LIB) -lcppunit -ldl
+LDLIBS += -L../../lib -L$(PAHO_C_LIB_DIR) -lpaho-mqttpp3 -l$(PAHO_C_LIB) -lgtest -ldl
 
 $(TGT): test.cpp $(HDR_TESTS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS)

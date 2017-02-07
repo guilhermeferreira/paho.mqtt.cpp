@@ -135,19 +135,15 @@ endif
 # Samples: proprocessor flags
 ###############################################################################
 
-if PAHO_WITH_SSL
-ssl_publish_CPPFLAGS = $(COMMONCPPFLAGS)
-endif
-
-###############################################################################
-# Samples: proprocessor flags
-###############################################################################
-
 async_publish_CPPFLAGS = $(COMMONCPPFLAGS)
 
 async_subscribe_CPPFLAGS = $(COMMONCPPFLAGS)
 
 sync_publish_CPPFLAGS = $(COMMONCPPFLAGS)
+
+if PAHO_WITH_SSL
+ssl_publish_CPPFLAGS = $(COMMONCPPFLAGS)
+endif
 
 ###############################################################################
 # Samples: compiler flags
@@ -221,7 +217,7 @@ mqttpp_unittest_LDFLAGS  = $(LDFLAGS)
 mqttpp_unittest_LDFLAGS += $(LIBS)
 
 mqttpp_unittest_LDADD  = libpaho-mqttpp3.la
-mqttpp_unittest_LDADD += -lcppunit
+mqttpp_unittest_LDADD += -lgtest
 
 ###############################################################################
 # Documentation
