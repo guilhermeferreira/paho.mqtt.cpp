@@ -153,7 +153,7 @@ public:
 	/**
 	 * Destructor
 	 */
-	~async_client();
+	~async_client() override;
 	/**
 	 * Connects to an MQTT server using the default options.
 	 * @return token used to track and wait for the connect to complete. The
@@ -161,7 +161,7 @@ public:
 	 * @throw exception for non security related problems
 	 * @throw security_exception for security related problems
 	 */
-	virtual itoken_ptr connect();
+	itoken_ptr connect() override;
 	/**
 	 * Connects to an MQTT server using the provided connect options.
 	 * @param options a set of connection parameters that override the
@@ -171,7 +171,7 @@ public:
 	 * @throw exception for non security related problems
 	 * @throw security_exception for security related problems
 	 */
-	virtual itoken_ptr connect(connect_options options);
+	itoken_ptr connect(connect_options options) override;
 	/**
 	 * Connects to an MQTT server using the specified options.
 	 * @param options a set of connection parameters that override the
@@ -183,8 +183,8 @@ public:
 	 * @throw exception for non security related problems
 	 * @throw security_exception for security related problems
 	 */
-	virtual itoken_ptr connect(connect_options options, void* userContext,
-							   iaction_listener& cb);
+	itoken_ptr connect(connect_options options, void* userContext,
+							   iaction_listener& cb) override;
 	/**
 	 *
 	 * @param userContext optional object used to pass context to the
@@ -196,14 +196,14 @@ public:
 	 * @throw exception for non security related problems
 	 * @throw security_exception for security related problems
 	 */
-	virtual itoken_ptr connect(void* userContext, iaction_listener& cb);
+	itoken_ptr connect(void* userContext, iaction_listener& cb) override;
 	/**
 	 * Disconnects from the server.
 	 * @return token used to track and wait for the disconnect to complete.
 	 *  	   The token will be passed to any callback that has been set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	virtual itoken_ptr disconnect() { return disconnect(0L); }
+	itoken_ptr disconnect() override { return disconnect(0L); }
 	/**
 	 * Disconnects from the server.
 	 *
@@ -216,7 +216,7 @@ public:
 	 *  	   set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	virtual itoken_ptr disconnect(long quiesceTimeout);
+	itoken_ptr disconnect(long quiesceTimeout) override;
 	/**
 	 * Disconnects from the server.
 	 *
@@ -233,8 +233,8 @@ public:
 	 *  	   a callback is set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	virtual itoken_ptr disconnect(long quiesceTimeout, void* userContext,
-								  iaction_listener& cb);
+	itoken_ptr disconnect(long quiesceTimeout, void* userContext,
+								  iaction_listener& cb) override;
 	/**
 	 * Disconnects from the server.
 	 * @param userContext optional object used to pass context to the
@@ -246,34 +246,34 @@ public:
 	 *  	   a callback is set.
 	 * @throw exception for problems encountered while disconnecting
 	 */
-	virtual itoken_ptr disconnect(void* userContext, iaction_listener& cb) {
+	itoken_ptr disconnect(void* userContext, iaction_listener& cb) override {
 		return disconnect(0L, userContext, cb);
 	}
 	/**
 	 * Returns the delivery token for the specified message ID.
 	 * @return idelivery_token
 	 */
-	virtual idelivery_token_ptr get_pending_delivery_token(int msgID) const;
+	idelivery_token_ptr get_pending_delivery_token(int msgID) const override;
 	/**
 	 * Returns the delivery tokens for any outstanding publish operations.
 	 * @return idelivery_token[]
 	 */
-	virtual std::vector<idelivery_token_ptr> get_pending_delivery_tokens() const;
+	std::vector<idelivery_token_ptr> get_pending_delivery_tokens() const override;
 	/**
 	 * Returns the client ID used by this client.
 	 * @return The client ID used by this client.
 	 */
-	virtual std::string get_client_id() const { return clientId_; }
+	std::string get_client_id() const override { return clientId_; }
 	/**
 	 * Returns the address of the server used by this client.
 	 * @return The server's address, as a URI String.
 	 */
-	virtual std::string get_server_uri() const { return serverURI_; }
+	std::string get_server_uri() const override { return serverURI_; }
 	/**
 	 * Determines if this client is currently connected to the server.
 	 * @return true if connected, false otherwise.
 	 */
-	virtual bool is_connected() const { return MQTTAsync_isConnected(cli_) != 0; }
+	bool is_connected() const override { return MQTTAsync_isConnected(cli_) != 0; }
 	/**
 	 * Publishes a message to a topic on the server
 	 * @param topic The topic to deliver the message to
@@ -286,8 +286,8 @@ public:
 	 * @return token used to track and wait for the publish to complete. The
 	 *  	   token will be passed to callback methods if set.
 	 */
-	virtual idelivery_token_ptr publish(const std::string& topic, const void* payload,
-										size_t n, int qos, bool retained);
+	idelivery_token_ptr publish(const std::string& topic, const void* payload,
+										size_t n, int qos, bool retained) override;
 	/**
 	 * Publishes a message to a topic on the server
 	 * @param topic The topic to deliver the message to
@@ -303,10 +303,10 @@ public:
 	 * @return token used to track and wait for the publish to complete. The
 	 *  	   token will be passed to callback methods if set.
 	 */
-	virtual idelivery_token_ptr publish(const std::string& topic,
+	idelivery_token_ptr publish(const std::string& topic,
 										const void* payload, size_t n,
 										int qos, bool retained, void* userContext,
-										iaction_listener& cb);
+										iaction_listener& cb) override;
 	/**
 	 * Publishes a message to a topic on the server Takes an Message
 	 * message and delivers it to the server at the requested quality of
@@ -316,7 +316,7 @@ public:
 	 * @return token used to track and wait for the publish to complete. The
 	 *  	   token will be passed to callback methods if set.
 	 */
-	virtual idelivery_token_ptr publish(const std::string& topic, const_message_ptr msg);
+	idelivery_token_ptr publish(const std::string& topic, const_message_ptr msg) override;
 	/**
 	 * Publishes a message to a topic on the server.
 	 * @param topic the topic to deliver the message to
@@ -329,14 +329,14 @@ public:
 	 * @return token used to track and wait for the publish to complete. The
 	 *  	   token will be passed to callback methods if set.
 	 */
-	virtual idelivery_token_ptr publish(const std::string& topic, const_message_ptr msg,
-										void* userContext, iaction_listener& cb);
+	idelivery_token_ptr publish(const std::string& topic, const_message_ptr msg,
+										void* userContext, iaction_listener& cb) override;
 	/**
 	 * Sets a callback listener to use for events that happen
 	 * asynchronously.
 	 * @param callback which will be invoked for certain asynchronous events
 	 */
-	virtual void set_callback(callback& cb);
+	void set_callback(callback& cb) override;
 	/**
 	 * Subscribe to multiple topics, each of which may include wildcards.
 	 * @param topicFilters
@@ -348,8 +348,8 @@ public:
 	 * @return token used to track and wait for the subscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr subscribe(const topic_filter_collection& topicFilters,
-								 const qos_collection& qos);
+	itoken_ptr subscribe(const topic_filter_collection& topicFilters,
+								 const qos_collection& qos) override;
 	/**
 	 * Subscribes to multiple topics, each of which may include wildcards.
 	 * @param topicFilters
@@ -364,9 +364,9 @@ public:
 	 * @return token used to track and wait for the subscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr subscribe(const topic_filter_collection& topicFilters,
+	itoken_ptr subscribe(const topic_filter_collection& topicFilters,
 								 const qos_collection& qos,
-								 void* userContext, iaction_listener& cb);
+								 void* userContext, iaction_listener& cb) override;
 	/**
 	 * Subscribe to a topic, which may include wildcards.
 	 * @param topicFilter the topic to subscribe to, which can include
@@ -376,7 +376,7 @@ public:
 	 * @return token used to track and wait for the subscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr subscribe(const std::string& topicFilter, int qos);
+	itoken_ptr subscribe(const std::string& topicFilter, int qos) override;
 	/**
 	 * Subscribe to a topic, which may include wildcards.
 	 * @param topicFilter the topic to subscribe to, which can include
@@ -392,8 +392,8 @@ public:
 	 * @return token used to track and wait for the subscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr subscribe(const std::string& topicFilter, int qos,
-								 void* userContext, iaction_listener& cb);
+	itoken_ptr subscribe(const std::string& topicFilter, int qos,
+								 void* userContext, iaction_listener& cb) override;
 	/**
 	 * Requests the server unsubscribe the client from a topic.
 	 * @param topicFilter the topic to unsubscribe from. It must match a
@@ -401,7 +401,7 @@ public:
 	 * @return token used to track and wait for the unsubscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr unsubscribe(const std::string& topicFilter);
+	itoken_ptr unsubscribe(const std::string& topicFilter) override;
 	/**
 	 * Requests the server unsubscribe the client from one or more topics.
 	 * @param topicFilters one or more topics to unsubscribe from. Each
@@ -410,7 +410,7 @@ public:
 	 * @return token used to track and wait for the unsubscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr unsubscribe(const topic_filter_collection& topicFilters);
+	itoken_ptr unsubscribe(const topic_filter_collection& topicFilters) override;
 	/**
 	 * Requests the server unsubscribe the client from one or more topics.
 	 * @param topicFilters
@@ -421,8 +421,8 @@ public:
 	 * @return token used to track and wait for the unsubscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr unsubscribe(const topic_filter_collection& topicFilters,
-								   void* userContext, iaction_listener& cb);
+	itoken_ptr unsubscribe(const topic_filter_collection& topicFilters,
+								   void* userContext, iaction_listener& cb) override;
 	/**
 	 * Requests the server unsubscribe the client from a topics.
 	 * @param topicFilter the topic to unsubscribe from. It must match a
@@ -434,8 +434,8 @@ public:
 	 * @return token used to track and wait for the unsubscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	virtual itoken_ptr unsubscribe(const std::string& topicFilter,
-								   void* userContext, iaction_listener& cb);
+	itoken_ptr unsubscribe(const std::string& topicFilter,
+								   void* userContext, iaction_listener& cb) override;
 };
 
 /** Smart/shared pointer to an asynchronous MQTT client object */

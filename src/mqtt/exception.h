@@ -67,7 +67,7 @@ public:
 	 * Returns an explanatory string for the exception.
 	 * @return const char* 
 	 */
-	virtual const char* what() const noexcept {
+	const char* what() const noexcept override {
 		return (std::string("MQTT exception ")+std::to_string(code_)).c_str();
 	}
 };
