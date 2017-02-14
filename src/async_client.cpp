@@ -233,8 +233,6 @@ itoken_ptr async_client::connect(connect_options opts)
 	itoken_ptr tok = std::make_shared<token>(*this);
 	add_token(tok);
 
-	opts.opts_.onSuccess = &token::on_success;
-	opts.opts_.onFailure = &token::on_failure;
 	opts.opts_.context = dynamic_cast<token*>(tok.get());
 
 	int rc = MQTTAsync_connect(cli_, &opts.opts_);
@@ -255,8 +253,6 @@ itoken_ptr async_client::connect(connect_options opts, void* userContext,
 	tok->set_action_callback(cb);
 	add_token(tok);
 
-	opts.opts_.onSuccess = &token::on_success;
-	opts.opts_.onFailure = &token::on_failure;
 	opts.opts_.context = dynamic_cast<token*>(tok.get()); 
 
 	int rc = MQTTAsync_connect(cli_, &opts.opts_);
