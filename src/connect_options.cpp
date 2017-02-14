@@ -21,10 +21,8 @@ namespace mqtt {
 /////////////////////////////////////////////////////////////////////////////
 
 connect_options::connect_options()
-		: opts_(MQTTAsync_connectOptions_initializer)
+		: connect_options{"", ""}
 {
-	opts_.will = nullptr;
-	opts_.ssl = nullptr;
 }
 
 connect_options::connect_options(const std::string& userName, const std::string& password)
@@ -33,6 +31,8 @@ connect_options::connect_options(const std::string& userName, const std::string&
 {
 	opts_.will = nullptr;
 	opts_.ssl = nullptr;
+	opts_.onSuccess = &token::on_success;
+	opts_.onFailure = &token::on_failure;
 }
 
 void connect_options::set_password(const std::string& password)

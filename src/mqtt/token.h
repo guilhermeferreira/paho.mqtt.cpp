@@ -78,7 +78,7 @@ class token : public virtual itoken
 	int rc_;
 
 	/** Client has special access for full initialization */
-	friend class async_client;
+	friend class connect_options;
 	friend class response_options;
 	friend class delivery_response_options;
 	friend class disconnect_options;
