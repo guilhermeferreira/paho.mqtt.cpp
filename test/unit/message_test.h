@@ -46,12 +46,12 @@ class message_test : public CppUnit::TestFixture
 	CPPUNIT_TEST_SUITE_END();
 
 	const std::string EMPTY_STR;
-	const int DFLT_QOS = 0;
+	const mqtt::QoS DFLT_QOS = mqtt::QoS::at_most_once;
 
 	const char* BUF = "Hello there";
 	const size_t N = std::strlen(BUF);
 	const std::string PAYLOAD = std::string(BUF);
-	const int QOS = 1;
+	const mqtt::QoS QOS = mqtt::QoS::at_least_once;
 
 	mqtt::message orgMsg;
 
@@ -126,7 +126,7 @@ public:
 		MQTTAsync_message c_msg = MQTTAsync_message_initializer;
 		c_msg.payload = const_cast<char*>(BUF);
 		c_msg.payloadlen = N;
-		c_msg.qos = QOS;
+		c_msg.qos = static_cast<int>(QOS);
 		c_msg.retained = 1;
 		c_msg.dup = 1;
 		mqtt::message msg(c_msg);
