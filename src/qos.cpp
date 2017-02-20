@@ -1,7 +1,5 @@
-// topic.cpp
-
 /*******************************************************************************
- * Copyright (c) 2013-2016 Frank Pagliughi <fpagliughi@mindspring.com>
+ * Copyright (c) 2016 Guilherme M. Ferreira <guilherme.maciel.ferreira@gmail.com>
  *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
@@ -13,36 +11,29 @@
  *   http://www.eclipse.org/org/documents/edl-v10.php.
  *
  * Contributors:
- *    Frank Pagliughi - initial implementation and documentation
+ *    Guilherme M. Ferreira - initial implementation and documentation
  *******************************************************************************/
 
+#include "mqtt/qos.h"
 
-#include "mqtt/topic.h"
-#include "mqtt/async_client.h"
+#include "mqtt/exception.h"
 
 namespace mqtt {
 
 /////////////////////////////////////////////////////////////////////////////
 
-idelivery_token_ptr topic::publish(const void* payload, size_t n,
-								   QoS qos, bool retained)
-{
-	return cli_->publish(name_, payload, n, qos, retained);
+void validate_qos(QoS qos) {
+	if ((static_cast<int>(qos) < 0) || (2 < static_cast<int>(qos)))
+		throw mqtt::exception(MQTTASYNC_BAD_QOS);
 }
 
-idelivery_token_ptr topic::publish(const std::string& str, QoS qos, bool retained)
-{
-	return publish(str.data(), str.length(), qos, retained);
-}
-
-idelivery_token_ptr topic::publish(const_message_ptr msg)
-{
-	return cli_->publish(name_, msg);
+std::ostream& operator<<(std::ostream& os, QoS qos) {
+	int iqos = static_cast<int>(qos);
+	os << iqos;
+	return os;
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// end namespace mqtt
-}
 
-
+} // end namespace mqtt
 

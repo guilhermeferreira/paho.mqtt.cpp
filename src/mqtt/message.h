@@ -32,6 +32,8 @@ extern "C" {
 #include <memory>
 #include <stdexcept>
 
+#include "mqtt/qos.h"
+
 namespace mqtt {
 
 /////////////////////////////////////////////////////////////////////////////
@@ -84,7 +86,7 @@ public:
 	 * @param qos The quality of service for the message.
 	 * @param retained Whether the message should be retained by the broker.
 	 */
-	message(const void* payload, size_t len, int qos, bool retained);
+	message(const void* payload, size_t len, QoS qos, bool retained);
 	/**
 	 * Constructs a message with the specified string as a payload, and
 	 * all other values set to defaults.
@@ -97,7 +99,7 @@ public:
 	 * @param qos The quality of service for the message.
 	 * @param retained Whether the message should be retained by the broker.
 	 */
-	message(const std::string& payload, int qos, bool retained);
+	message(const std::string& payload, QoS qos, bool retained);
 	/**
 	 * Constructs a message as a copy of the message structure.
 	 * @param msg A "C" MQTTAsync_message structure.
@@ -141,7 +143,7 @@ public:
 	 * Returns the quality of service for this message.
 	 * @return The quality of service for this message.
 	 */
-	int get_qos() const { return msg_.qos; }
+	QoS get_qos() const { return static_cast<QoS>(msg_.qos); }
 	/**
 	 * Returns the underlying Paho MQTT C struct
 	 * @return MQTTAsync_message
@@ -178,10 +180,7 @@ public:
 	 * Sets the quality of service for this message.
 	 * @param qos The integer Quality of Service for the message
 	 */
-	void set_qos(int qos) {
-		validate_qos(qos);
-		msg_.qos = qos;
-	}
+	void set_qos(QoS qos);
 	/**
 	 * Whether or not the publish message should be retained by the broker.
 	 * @param retained @em true if the message should be retained by the
@@ -193,15 +192,6 @@ public:
 	 * @return std::string
 	 */
 	std::string to_str() const { return get_payload(); }
-	/**
-	 * Determines if the QOS value is a valid one.
-	 * @param qos The QOS value.
-	 * @throw std::invalid_argument If the qos value is invalid.
-	 */
-	static void validate_qos(int qos) {
-		if (qos < 0 || qos > 2)
-			throw std::invalid_argument("QOS invalid");
-	}
 };
 
 /** Smart/shared pointer to a message */
@@ -229,7 +219,7 @@ inline message_ptr make_message(const void* payload, size_t len) {
  * @param retained Whether the message should be retained by the broker.
  */
 inline message_ptr make_message(const void* payload, size_t len,
-								int qos, bool retained) {
+								QoS qos, bool retained) {
 	return std::make_shared<mqtt::message>(payload, len, qos, retained);
 }
 
@@ -249,7 +239,7 @@ inline message_ptr make_message(const std::string& payload) {
  * @param qos The quality of service for the message.
  * @param retained Whether the message should be retained by the broker.
  */
-inline message_ptr make_message(const std::string& payload, int qos, bool retained) {
+inline message_ptr make_message(const std::string& payload, QoS qos, bool retained) {
 	return std::make_shared<mqtt::message>(payload, qos, retained);
 }
 

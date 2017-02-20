@@ -28,6 +28,7 @@ extern "C" {
 	#include "MQTTAsync.h"
 }
 
+#include "mqtt/qos.h"
 #include "mqtt/token.h"
 #include "mqtt/delivery_token.h"
 #include "mqtt/iclient_persistence.h"
@@ -287,7 +288,7 @@ public:
 	 *  	   token will be passed to callback methods if set.
 	 */
 	idelivery_token_ptr publish(const std::string& topic, const void* payload,
-										size_t n, int qos, bool retained) override;
+										size_t n, QoS qos, bool retained) override;
 	/**
 	 * Publishes a message to a topic on the server
 	 * @param topic The topic to deliver the message to
@@ -305,7 +306,7 @@ public:
 	 */
 	idelivery_token_ptr publish(const std::string& topic,
 										const void* payload, size_t n,
-										int qos, bool retained, void* userContext,
+										QoS qos, bool retained, void* userContext,
 										iaction_listener& cb) override;
 	/**
 	 * Publishes a message to a topic on the server Takes an Message
@@ -376,7 +377,7 @@ public:
 	 * @return token used to track and wait for the subscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	itoken_ptr subscribe(const std::string& topicFilter, int qos) override;
+	itoken_ptr subscribe(const std::string& topicFilter, QoS qos) override;
 	/**
 	 * Subscribe to a topic, which may include wildcards.
 	 * @param topicFilter the topic to subscribe to, which can include
@@ -392,7 +393,7 @@ public:
 	 * @return token used to track and wait for the subscribe to complete.
 	 *  	   The token will be passed to callback methods if set.
 	 */
-	itoken_ptr subscribe(const std::string& topicFilter, int qos,
+	itoken_ptr subscribe(const std::string& topicFilter, QoS qos,
 								 void* userContext, iaction_listener& cb) override;
 	/**
 	 * Requests the server unsubscribe the client from a topic.

@@ -27,7 +27,7 @@ const std::string ADDRESS("tcp://localhost:1883");
 const std::string CLIENTID("AsyncSubcriber");
 const std::string TOPIC("hello");
 
-const int  QOS = 1;
+const mqtt::QoS QOS = mqtt::QoS::at_least_once;
 const long TIMEOUT = 10000L;
 
 /////////////////////////////////////////////////////////////////////////////
@@ -97,7 +97,7 @@ class callback : public virtual mqtt::callback,
 		std::cout << "\nConnection success" << std::endl;
 		std::cout << "\nSubscribing to topic '" << TOPIC << "'\n"
 			<< "\tfor client " << CLIENTID
-			<< " using QoS" << QOS << "\n"
+			<< " using QoS" << static_cast<int>(QOS) << "\n"
 			<< "Press Q<Enter> to quit\n" << std::endl;
 
 		cli_.subscribe(TOPIC, QOS, nullptr, subListener_);
