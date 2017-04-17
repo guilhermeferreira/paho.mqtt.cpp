@@ -1,5 +1,5 @@
 #*******************************************************************************
-#  Copyright (c) 2016
+#  Copyright (c) 2016-2017
 # 
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -35,18 +35,7 @@ elseif(UNIX)
 endif()
 
 ## use Object Library to optimize compilation
-set(COMMON_SRC
-    async_client.cpp
-    client.cpp
-    disconnect_options.cpp
-    iclient_persistence.cpp
-    message.cpp
-    response_options.cpp
-    token.cpp
-    topic.cpp
-    topic_collection.cpp
-    connect_options.cpp
-    will_options.cpp)
+file(GLOB COMMON_SRC *.cpp)
 
 if(PAHO_WITH_SSL)
     set(COMMON_SRC

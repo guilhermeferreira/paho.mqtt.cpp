@@ -1,5 +1,5 @@
 #*******************************************************************************
-#  Copyright (c) 2016
+#  Copyright (c) 2016-2017
 # 
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -17,27 +17,7 @@
 ## Note: on OS X you should install XCode and the associated command-line tools
 
 ## install headers
-set(COMMON_HDR
-    async_client.h
-    buffer_ref.h
-    callback.h
-    client.h
-    connect_options.h
-    delivery_token.h
-    disconnect_options.h
-    exception.h
-    iaction_listener.h
-    iasync_client.h
-    iclient_persistence.h
-    ipersistable.h
-    message.h
-    response_options.h
-    thread_queue.h
-    token.h
-    topic.h
-    topic_collection.h
-    types.h
-    will_options.h)
+file(GLOB COMMON_HDR *.h)
 
 if(PAHO_WITH_SSL)
     set(COMMON_HDR
