@@ -38,7 +38,6 @@ install:
   - gcov --version
   - g++ --version
   - lcov --version
->>>>>>> 3a60207... Travis: add CodeCov support
 
 addons:
   apt:
