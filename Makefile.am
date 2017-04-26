@@ -1,5 +1,5 @@
 #*******************************************************************************
-#  Copyright (c) 2016
+#  Copyright (c) 2016-2017
 #
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -26,21 +26,11 @@ lib_LTLIBRARIES  = libpaho-mqttpp3.la
 ###############################################################################
 # Library: source code
 ###############################################################################
-
-libpaho_mqttpp3_la_SOURCES  = src/async_client.cpp
-libpaho_mqttpp3_la_SOURCES += src/client.cpp
-libpaho_mqttpp3_la_SOURCES += src/disconnect_options.cpp
-libpaho_mqttpp3_la_SOURCES += src/iclient_persistence.cpp
-libpaho_mqttpp3_la_SOURCES += src/message.cpp
-libpaho_mqttpp3_la_SOURCES += src/response_options.cpp
-libpaho_mqttpp3_la_SOURCES += src/token.cpp
-libpaho_mqttpp3_la_SOURCES += src/topic.cpp
-libpaho_mqttpp3_la_SOURCES += src/topic_collection.cpp
-libpaho_mqttpp3_la_SOURCES += src/connect_options.cpp
-libpaho_mqttpp3_la_SOURCES += src/will_options.cpp
-if PAHO_WITH_SSL
+libpaho_mqttpp3_la_SOURCES  = $(wildcard ${srcdir}/src/*.cpp)
+# use pattern to exclude ssl_options.cpp
+#if PAHO_WITH_SSL
 libpaho_mqttpp3_la_SOURCES += src/ssl_options.cpp
-endif
+#endif
 
 
 ###############################################################################

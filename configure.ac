@@ -24,7 +24,7 @@ AC_CONFIG_AUX_DIR([autotools_build])
 AC_CONFIG_MACRO_DIR([m4])
 AC_LANG_CPLUSPLUS
 
-AM_INIT_AUTOMAKE([1.11 -Wall -Werror foreign subdir-objects])
+AM_INIT_AUTOMAKE([1.11 -Wall foreign subdir-objects])
 m4_ifdef([AM_PROG_AR], [AM_PROG_AR])
 AM_SILENT_RULES([yes])
 
