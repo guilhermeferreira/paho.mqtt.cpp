@@ -187,7 +187,7 @@ samples: $(SRC_DIR)/samples
 .PHONY: check
 check: $(TEST_DIR)/unit
 	$(QUIET) $(MAKE) -C $< clean
-	$(QUIET) $(MAKE) -C $< run
+	$(QUIET) $(MAKE) -C $<
 
 .PHONY: cppcheck
 cppcheck:

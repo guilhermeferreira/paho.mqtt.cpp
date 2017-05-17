@@ -17,10 +17,8 @@
  *    Frank Pagliughi - initial implementation and documentation
  *    Guilherme M. Ferreira - add more test cases
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_ssl_options_test_h
-#define __mqtt_ssl_options_test_h
 
 #include <gtest/gtest.h>
 
@@ -307,5 +305,8 @@ TEST_F(ssl_options_test, test_set_empty_strings) {
 // end namespace mqtt
 }
 
-#endif		//  __mqtt_ssl_options_test_h
-
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

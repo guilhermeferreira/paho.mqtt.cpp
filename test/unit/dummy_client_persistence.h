@@ -22,6 +22,7 @@
 
 #include <map>
 
+#include "mqtt/exception.h"
 #include "mqtt/iclient_persistence.h"
 
 namespace mqtt {

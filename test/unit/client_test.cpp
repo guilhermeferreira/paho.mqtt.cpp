@@ -17,10 +17,8 @@
  *    Guilherme M. Ferreira - initial implementation and documentation
  *    Frank Pagliughi - updated tests for modified v1.0 client API
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_client_test_h
-#define __mqtt_client_test_h
 
 #include <stdexcept>
 #include <vector>
@@ -29,6 +27,7 @@
 
 #include "mqtt/client.h"
 
+#include "dummy_action_listener.h"
 #include "dummy_client_persistence.h"
 #include "dummy_callback.h"
 
@@ -468,4 +467,8 @@ TEST_F(client_test, test_unsubscribe_many_topics_1_arg_failure) {
 // end namespace mqtt
 }
 
-#endif //  __mqtt_client_test_h
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

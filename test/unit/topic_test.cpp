@@ -16,10 +16,8 @@
  * Contributors:
  *    Guilherme M. Ferreira - initial implementation and documentation
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_topic_test_h
-#define __mqtt_topic_test_h
 
 #include <algorithm>
 #include <memory>
@@ -28,6 +26,8 @@
 #include <gtest/gtest.h>
 
 #include "mqtt/topic.h"
+
+#include "dummy_async_client.h"
 
 namespace mqtt {
 
@@ -166,4 +166,8 @@ TEST_F(topic_test, test_publish_full_binary) {
 // end namespace mqtt
 }
 
-#endif //  __mqtt_topic_test_h
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

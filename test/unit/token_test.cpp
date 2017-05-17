@@ -17,10 +17,8 @@
  *    Guilherme M. Ferreira - initial implementation and documentation
  *    Frank Pagliughi - additional tests. Made this test a friend of token.
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_token_test_h
-#define __mqtt_token_test_h
 
 #include <algorithm>
 #include <memory>
@@ -28,7 +26,11 @@
 
 #include <gtest/gtest.h>
 
+#include "mqtt/connect_options.h"
+#include "mqtt/disconnect_options.h"
+#include "mqtt/response_options.h"
 #include "mqtt/token.h"
+
 #include "dummy_async_client.h"
 #include "dummy_action_listener.h"
 
@@ -328,4 +330,8 @@ TEST_F(token_test, test_wait_for_timeout) {
 // end namespace mqtt
 }
 
-#endif //  __mqtt_token_test_h
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

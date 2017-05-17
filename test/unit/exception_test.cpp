@@ -16,10 +16,8 @@
  * Contributors:
  *    Guilherme M. Ferreira - initial implementation and documentation
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_exception_test_h
-#define __mqtt_exception_test_h
 
 #include <gtest/gtest.h>
 
@@ -96,4 +94,8 @@ TEST_F(exception_test, test_what) {
 // end namespace mqtt
 }
 
-#endif //  __mqtt_exception_test_h
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

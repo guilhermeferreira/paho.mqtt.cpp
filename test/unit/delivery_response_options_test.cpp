@@ -16,10 +16,8 @@
  * Contributors:
  *    Guilherme M. Ferreira - initial implementation and documentation
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_delivery_response_options_test_h
-#define __mqtt_delivery_response_options_test_h
 
 #include <gtest/gtest.h>
 
@@ -95,4 +93,8 @@ TEST_F(delivery_response_options_test, test_set_token) {
 // end namespace 'mqtt'
 }
 
-#endif //  __mqtt_delivery_response_options_test_h
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

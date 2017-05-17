@@ -17,10 +17,8 @@
  *    Frank Pagliughi - initial implementation and documentation
  *    Guilherme M. Ferreira - added more tests
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_message_test_h
-#define __mqtt_message_test_h
 
 #include <gtest/gtest.h>
 
@@ -342,5 +340,8 @@ TEST_F(message_test, test_validate_qos) {
 // end namespace mqtt
 }
 
-#endif		//  __mqtt_message_test_h
-
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

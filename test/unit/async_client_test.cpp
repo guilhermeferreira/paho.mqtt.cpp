@@ -16,10 +16,8 @@
  * Contributors:
  *    Guilherme M. Ferreira - initial implementation and documentation
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_async_client_test_h
-#define __mqtt_async_client_test_h
 
 #include <stdexcept>
 #include <vector>
@@ -870,5 +868,8 @@ TEST_F(async_client_test, test_unsubscribe_many_topics_3_args_failure) {
 // end namespace mqtt
 }
 
-#endif //  __mqtt_async_client_test_h
-
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

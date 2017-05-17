@@ -16,10 +16,8 @@
  * Contributors:
  *    Frank Pagliughi - initial implementation and documentation
  *    Guilherme M. Ferreira - changed test framework from CppUnit to GTest
+ *    Guilherme M. Ferreira - compile each unit test as an individual program
  *******************************************************************************/
-
-#ifndef __mqtt_string_collection_test_h
-#define __mqtt_string_collection_test_h
 
 #include "mqtt/string_collection.h"
 #include <vector>
@@ -322,4 +320,8 @@ TEST_F(string_collection_test, test_clear) {
 // end namespace mqtt
 }
 
-#endif		// __mqtt_string_collection_test_h
+int main(int argc, char* argv[])
+{
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+}

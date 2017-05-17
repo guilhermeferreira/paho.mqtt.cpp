@@ -224,7 +224,21 @@ endif
 # Test: names
 ###############################################################################
 
-check_PROGRAMS  = mqttpp-unittest
+check_PROGRAMS  = async_client_test
+check_PROGRAMS += buffer_ref_test
+check_PROGRAMS += client_test
+check_PROGRAMS += connect_options_test
+check_PROGRAMS += delivery_response_options_test
+check_PROGRAMS += disconnect_options_test
+check_PROGRAMS += exception_test
+check_PROGRAMS += iclient_persistence_test
+check_PROGRAMS += message_test
+check_PROGRAMS += response_options_test
+check_PROGRAMS += ssl_options_test
+check_PROGRAMS += string_collection_test
+check_PROGRAMS += token_test
+check_PROGRAMS += topic_test
+check_PROGRAMS += will_options_test
 
 TESTS = $(check_PROGRAMS)
 
@@ -232,30 +246,177 @@ TESTS = $(check_PROGRAMS)
 # Test: source code
 ###############################################################################
 
-mqttpp_unittest_SOURCES = test/unit/test.cpp
+async_client_test_SOURCES = test/unit/async_client_test.cpp
+
+buffer_ref_test_SOURCES = test/unit/buffer_ref_test.cpp
+
+client_test_SOURCES = test/unit/client_test.cpp
+
+connect_options_test_SOURCES = test/unit/connect_options_test.cpp
+
+delivery_response_options_test_SOURCES = test/unit/delivery_response_options_test.cpp
+
+disconnect_options_test_SOURCES = test/unit/disconnect_options_test.cpp
+
+exception_test_SOURCES = test/unit/exception_test.cpp
+
+iclient_persistence_test_SOURCES = test/unit/iclient_persistence_test.cpp
+
+message_test_SOURCES = test/unit/message_test.cpp
+
+response_options_test_SOURCES = test/unit/response_options_test.cpp
+
+ssl_options_test_SOURCES = test/unit/ssl_options_test.cpp
+
+string_collection_test_SOURCES = test/unit/string_collection_test.cpp
+
+token_test_SOURCES = test/unit/token_test.cpp
+
+topic_test_SOURCES = test/unit/topic_test.cpp
+
+will_options_test_SOURCES = test/unit/will_options_test.cpp
 
 ###############################################################################
 # Test: preprocessor flags
 ###############################################################################
 
-mqttpp_unittest_CPPFLAGS  = $(COMMONCPPFLAGS)
+async_client_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+buffer_ref_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+client_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+connect_options_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+delivery_response_options_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+disconnect_options_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+exception_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+iclient_persistence_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+message_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+response_options_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+ssl_options_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+string_collection_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+token_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+topic_test_CPPFLAGS  = $(COMMONCPPFLAGS)
+
+will_options_test_CPPFLAGS  = $(COMMONCPPFLAGS)
 
 ###############################################################################
 # Test: compiler flags
 ###############################################################################
 
-mqttpp_unittest_CXXFLAGS  = $(CXXFLAGS)
-mqttpp_unittest_CXXFLAGS += -I $(srcdir)/src
+UNITTESTCXXFLAGS  = $(CXXFLAGS)
+UNITTESTCXXFLAGS += -I $(srcdir)/src
+
+async_client_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+buffer_ref_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+client_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+connect_options_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+delivery_response_options_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+disconnect_options_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+exception_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+iclient_persistence_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+message_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+response_options_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+ssl_options_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+string_collection_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+token_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+topic_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
+
+will_options_test_CXXFLAGS  = $(UNITTESTCXXFLAGS)
 
 ###############################################################################
 # Test: linker flags
 ###############################################################################
 
-mqttpp_unittest_LDFLAGS  = $(LDFLAGS)
-mqttpp_unittest_LDFLAGS += $(LIBS)
+UNITTESTLDFLAGS  = $(LDFLAGS)
+UNITTESTLDFLAGS += $(LIBS)
 
-mqttpp_unittest_LDADD  = libpaho-mqttpp3.la
-mqttpp_unittest_LDADD += -lgtest
+async_client_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+buffer_ref_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+client_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+connect_options_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+delivery_response_options_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+disconnect_options_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+exception_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+iclient_persistence_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+message_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+response_options_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+ssl_options_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+string_collection_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+token_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+topic_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+will_options_test_LDFLAGS  = $(UNITTESTLDFLAGS)
+
+
+UNITTESTLDADD  = libpaho-mqttpp3.la
+UNITTESTLDADD += -lgtest
+
+async_client_test_LDADD  = $(UNITTESTLDADD)
+
+buffer_ref_test_LDADD  = $(UNITTESTLDADD)
+
+client_test_LDADD  = $(UNITTESTLDADD)
+
+connect_options_test_LDADD  = $(UNITTESTLDADD)
+
+delivery_response_options_test_LDADD  = $(UNITTESTLDADD)
+
+disconnect_options_test_LDADD  = $(UNITTESTLDADD)
+
+exception_test_LDADD  = $(UNITTESTLDADD)
+
+iclient_persistence_test_LDADD  = $(UNITTESTLDADD)
+
+message_test_LDADD  = $(UNITTESTLDADD)
+
+response_options_test_LDADD  = $(UNITTESTLDADD)
+
+ssl_options_test_LDADD  = $(UNITTESTLDADD)
+
+string_collection_test_LDADD  = $(UNITTESTLDADD)
+
+token_test_LDADD  = $(UNITTESTLDADD)
+
+topic_test_LDADD  = $(UNITTESTLDADD)
+
+will_options_test_LDADD  = $(UNITTESTLDADD)
 
 ###############################################################################
 # Documentation

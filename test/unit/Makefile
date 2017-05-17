@@ -22,11 +22,11 @@ else
   PAHO_C_LIB_DIR ?= $(PAHO_C_DIR)/lib
 endif
 
-
-TGT = mqttpp-unittest
+SRC_TESTS = $(wildcard *.cpp)
+TESTS = $(patsubst %_test.cpp,%_test,$(SRC_TESTS))
 
 .PHONY: all tests
-all: $(TGT)
+all: $(TESTS)
 
 ifneq ($(CROSS_COMPILE),)
   CC  = $(CROSS_COMPILE)gcc
@@ -35,7 +35,6 @@ ifneq ($(CROSS_COMPILE),)
   LD  = $(CROSS_COMPILE)ld
 endif
 
-HDR_TESTS = $(wildcard *.h)
 HDRS = $(wildcard $(PAHO_CPP_INC_DIR)/mqtt/*.h)
 
 CXXFLAGS += -Wall -std=c++11
@@ -66,22 +65,20 @@ LDLIBS += -L$(PAHO_CPP_LIB_DIR) -lpaho-mqttpp3
 LDLIBS += -L$(PAHO_C_LIB_DIR) -l$(PAHO_C_LIB)
 LDLIBS += -lgtest -ldl
 
-$(TGT): test.cpp $(HDR_TESTS) $(HDRS)
-	@echo "Building unit tests."
+%_test: %_test.cpp $(HDRS)
+	@echo "Building $@..."
 	$(QUIET) $(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $< $(LDLIBS) $(LDFLAGS)
+	@echo "Running $@..."
+	-$(QUIET) LD_LIBRARY_PATH=$(PAHO_C_LIB_DIR):$(PAHO_CPP_LIB_DIR) ./$@
 
-.PHONY: run
-run: $(TGT)
-	@echo "Running unit tests..."
-	$(QUIET) LD_LIBRARY_PATH=$(PAHO_C_LIB_DIR):$(PAHO_CPP_LIB_DIR) ./$(TGT)
-
-.PHONY: clean distclean dump
-
+.PHONY: clean
 clean:
-	rm -f $(TGT)
+	rm -f $(TESTS)
 
+.PHONY: distclean
 distclean: clean
 
+.PHONY: dump
 dump:
 	@echo CXX: $(CXX)
 	@echo Tests: $(HDR_TESTS)
