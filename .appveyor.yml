@@ -64,5 +64,7 @@ build_script:
 
     nmake install
 
+    ctest -VV --timeout 600
+
     cd ..
 

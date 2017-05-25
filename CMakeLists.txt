@@ -1,5 +1,5 @@
 #*******************************************************************************
-#  Copyright (c) 2016
+#  Copyright (c) 2016-2017 Guilherme M. Ferreira <guilherme.maciel.ferreira@gmail.com>
 # 
 #  All rights reserved. This program and the accompanying materials
 #  are made available under the terms of the Eclipse Public License v1.0
@@ -12,6 +12,7 @@
 # 
 #  Contributors:
 #     Guilherme Maciel Ferreira - initial version
+#     Guilherme Maciel Ferreira - add testing
 #*******************************************************************************/
 
 ## Note: on OS X you should install XCode and the associated command-line tools
@@ -48,6 +49,7 @@ set(PAHO_BUILD_DOCUMENTATION FALSE CACHE BOOL "Create and install the HTML based
 set(PAHO_MQTT_C_PATH "" CACHE PATH "Add a path to Paho MQTT C library and headers")
 set(PAHO_MQTT_C paho-mqtt3a)
 set(PAHO_WITH_SSL TRUE CACHE BOOL "Flag that defines whether to build ssl-enabled binaries too. ")
+set(GTEST_PATH "" CACHE PATH "Add a path to Google Test library and headers")
 
 include(CMakePahoMqttC)
 
@@ -85,3 +87,7 @@ elseif(UNIX)
 endif()
 
 include(CPack)
+
+## testing
+enable_testing()
+add_subdirectory(test/unit)
