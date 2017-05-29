@@ -1,6 +1,10 @@
 version: 1.1.{build}
 image: Visual Studio 2015
 configuration: Debug
+
+# Move Paho MQTT C part to appveyor_install_paho_mqtt_c.bat?
+# Move Google Test part to appveyor_install_googletest.bat?
+
 install:
 - cmd: >-
     git clone https://github.com/eclipse/paho.mqtt.c.git
@@ -21,6 +25,31 @@ install:
 
     cd ..\..
 
+- cmd: >-
+    git clone https://github.com/google/googletest
+
+    cd googletest
+
+    git checkout tags/release-1.7.0 -b release-1.7.0
+
+    "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
+
+    cmake -G "NMake Makefiles" -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=FALSE .
+
+    nmake
+
+    mkdir "C:\Temp\GTest\gtest"
+
+    xcopy /S /E "include" "C:\Temp\GTest\"
+
+    copy /Y "gtest_main.lib" "C:\Temp\GTest\"
+
+    copy /Y "gtest.lib" "C:\Temp\GTest\"
+
+    cd ..
+
+    set PATH="C:\Temp\GTest";%PATH%
+
 build_script:
 - cmd: >-
     mkdir build_cmake
@@ -29,7 +58,7 @@ build_script:
 
     "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\vcvarsall.bat" x64
 
-    cmake -G "NMake Makefiles" -DCMAKE_INSTALL_PREFIX="C:\Temp\paho-cpp" -DPAHO_MQTT_C_PATH="C:\Temp\paho-c" -DPAHO_WITH_SSL=TRUE -DPAHO_BUILD_DOCUMENTATION=FALSE -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=TRUE ..
+    cmake -G "NMake Makefiles" -DCMAKE_INSTALL_PREFIX="C:\Temp\paho-cpp" -DPAHO_MQTT_C_PATH="C:\Temp\paho-c" -DPAHO_WITH_SSL=FALSE -DPAHO_BUILD_DOCUMENTATION=FALSE -DPAHO_BUILD_STATIC=TRUE -DGTEST_PATH="C:\Temp\GTest" -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE=TRUE ..
 
     nmake
 
