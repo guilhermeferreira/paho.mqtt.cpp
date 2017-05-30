@@ -142,9 +142,8 @@ TEST_F(token_test, test_on_success_with_data) {
 	mqtt::token tok{ cli };
 
 	constexpr int MESSAGE_ID = 12;
-	MQTTAsync_successData data = {
-		.token = MESSAGE_ID,
-	};
+	MQTTAsync_successData data;
+	data.token = MESSAGE_ID;
 
 	EXPECT_FALSE(tok.is_complete());
 	token_test::on_success(&tok, &data);
@@ -173,11 +172,11 @@ TEST_F(token_test, test_on_failure_with_data) {
 
 	EXPECT_FALSE(tok.is_complete());
 	constexpr int MESSAGE_ID = 12;
-	MQTTAsync_failureData data = {
-		.token = MESSAGE_ID,
-		.code = 13,
-		.message = nullptr,
-	};
+	MQTTAsync_failureData data;
+	data.token = MESSAGE_ID;
+	data.code = 13;
+	data.message = nullptr;
+
 	token_test::on_failure(&tok, &data);
 	EXPECT_TRUE(tok.is_complete());
 	EXPECT_EQ(MESSAGE_ID, tok.get_message_id());
@@ -272,11 +271,11 @@ TEST_F(token_test, test_wait_failure) {
 	// returns immediately. Otherwise we will get stuck in a single thread
 	// that can't change the complete flag.
 	constexpr int MESSAGE_ID = 12;
-	MQTTAsync_failureData data = {
-		.token = MESSAGE_ID,
-		.code = MQTTASYNC_FAILURE,
-		.message = nullptr,
-	};
+	MQTTAsync_failureData data;
+	data.token = MESSAGE_ID;
+	data.code = MQTTASYNC_FAILURE;
+	data.message = nullptr;
+
 	token_test::on_failure(&tok, &data);
 
 	EXPECT_TRUE(tok.is_complete());
