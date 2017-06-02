@@ -51,7 +51,7 @@ namespace mqtt {
  * It is up to the persistence interface to log any exceptions or error
  * information which may be required when diagnosing a persistence failure.
  */
-class iclient_persistence
+class DLLExport iclient_persistence
 {
 	friend class async_client;
 	friend class iclient_persistence_test;

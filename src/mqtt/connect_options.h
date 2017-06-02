@@ -43,7 +43,7 @@ namespace mqtt {
  * Holds the set of options that control how the client connects to a
  * server.
  */
-class connect_options
+class DLLExport connect_options
 {
 	/** The default C struct */
 	static const MQTTAsync_connectOptions DFLT_C_STRUCT ;

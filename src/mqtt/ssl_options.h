@@ -38,7 +38,7 @@ namespace mqtt {
 /**
  * Holds the set of SSL options for connection.
  */
-class ssl_options
+class DLLExport ssl_options
 {
 	/** The default C struct */
 	static const MQTTAsync_SSLOptions DFLT_C_STRUCT ;

@@ -49,7 +49,7 @@ namespace mqtt {
  * It is safe to pass these buffer references across threads since all
  * references promise not to update the contents of the buffer.
  */
-class message
+class DLLExport message
 {
 public:
 	/** The default QoS for a message */

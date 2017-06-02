@@ -54,7 +54,7 @@ namespace mqtt {
  * @li unsubscribe
  * @li disconnect
  */
-class iasync_client
+class DLLExport iasync_client
 {
 	friend class token;
 	virtual void remove_token(token* tok) =0;

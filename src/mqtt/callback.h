@@ -38,7 +38,7 @@ namespace mqtt {
  * Provides a mechanism for tracking the completion of an asynchronous
  * action.
  */
-class callback
+class DLLExport callback
 {
 public:
 	/** Smart/shared pointer to an object of this type */

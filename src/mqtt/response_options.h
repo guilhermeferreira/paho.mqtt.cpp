@@ -24,7 +24,7 @@ class token_test;
 /**
  * The response options for various asynchronous calls.
  */
-class response_options
+class DLLExport response_options
 {
 	/** The underlying C structure */
 	MQTTAsync_responseOptions opts_;
@@ -65,7 +65,7 @@ public:
  * The response options for asynchronous calls targeted at delivery.
  * Each of these objects is tied to a specific delivery_token.
  */
-class delivery_response_options
+class DLLExport delivery_response_options
 {
 	/** The underlying C structure */
 	MQTTAsync_responseOptions opts_;

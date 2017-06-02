@@ -57,7 +57,7 @@ const string COPYRIGHT("Copyright (c) 2013-2017 Frank Pagliughi");
  * Lightweight client for talking to an MQTT server using non-blocking
  * methods that allow an operation to run in the background.
  */
-class async_client : public virtual iasync_client
+class DLLExport async_client : public virtual iasync_client
 {
 public:
 	/** Smart/shared pointer for an object of this class */

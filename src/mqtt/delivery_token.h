@@ -38,7 +38,7 @@ namespace mqtt {
  * Used to track the the delivery progress of a message when a publish is
  * executed in a non-blocking manner (run in the background) action.
  */
-class delivery_token : public token
+class DLLExport delivery_token : public token
 {
 	/** The message being tracked. */
 	const_message_ptr msg_;

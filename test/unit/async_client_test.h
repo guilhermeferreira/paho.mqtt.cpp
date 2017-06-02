@@ -654,7 +654,7 @@ TEST_F(async_client_test, test_subscribe_many_topics_2_args_failure) {
 		ASSERT_NE(nullptr, token_sub);
 		token_sub->wait_for(TIMEOUT);
 	}
-	catch (const mqtt::exception& ex) {
+	catch (const mqtt::exception&) {
 		//EXPECT_EQ(MQTTASYNC_BAD_QOS, ex.get_reason_code());
 	}
 
@@ -700,7 +700,7 @@ TEST_F(async_client_test, test_subscribe_many_topics_4_args_failure) {
 	try {
 		cli.subscribe(TOPIC_COLL, BAD_QOS_COLL, &CONTEXT, listener)->wait_for(TIMEOUT);
 	}
-	catch (const mqtt::exception& ex) {
+	catch (const mqtt::exception&) {
 		//EXPECT_EQ(MQTTASYNC_BAD_QOS, ex.get_reason_code());
 	}
 

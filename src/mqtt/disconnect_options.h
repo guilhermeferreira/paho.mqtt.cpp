@@ -34,7 +34,7 @@ namespace mqtt {
 /**
  * Options for disconnecting from an MQTT broker.
  */
-class disconnect_options
+class DLLExport disconnect_options
 {
 	/** The default C struct */
 	static const MQTTAsync_disconnectOptions DFLT_C_STRUCT;

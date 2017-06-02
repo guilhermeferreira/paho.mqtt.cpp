@@ -46,7 +46,7 @@ class iasync_client;
  * Provides a mechanism for tracking the completion of an asynchronous
  * action.
  */
-class token
+class DLLExport token
 {
 	/** Lock guard type for this class. */
 	using guard = std::lock_guard<std::mutex>;

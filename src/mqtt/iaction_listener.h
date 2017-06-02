@@ -45,7 +45,7 @@ class token;
  * is important that the listener returns control quickly otherwise the
  * operation of the MQTT client will be stalled.
  */
-class iaction_listener
+class DLLExport iaction_listener
 {
 public:
 	/** Smart/shared pointer to an object of this class. */

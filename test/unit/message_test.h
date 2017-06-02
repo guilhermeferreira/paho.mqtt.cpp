@@ -119,7 +119,7 @@ TEST_F(message_test, test_buf_constructor) {
 	EXPECT_EQ(0, memcmp(BUF, c_struct.payload, N));
 	EXPECT_EQ(QOS, c_struct.qos);
 	EXPECT_NE(0, c_struct.retained);
-	EXPECT_EQ(DFLT_DUP, c_struct.dup);
+	EXPECT_EQ(DFLT_DUP, c_struct.dup != 0);
 }
 
 // ----------------------------------------------------------------------
@@ -174,7 +174,7 @@ TEST_F(message_test, test_c_struct_constructor) {
 	MQTTAsync_message c_msg = MQTTAsync_message_initializer;
 
 	c_msg.payload = const_cast<char*>(BUF);
-	c_msg.payloadlen = N;
+	c_msg.payloadlen = static_cast<int>(N);
 	c_msg.qos = QOS;
 	c_msg.retained = 1;
 	c_msg.dup = 1;

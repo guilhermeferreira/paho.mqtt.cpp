@@ -44,7 +44,7 @@ class connect_options;
  * It sets the LWT binary payload, via the 'payload' struct field, and
    leaves the 'message' field as a nullptr.
  */
-class will_options
+class DLLExport will_options
 {
 	/** The default QoS for the LWT, if unspecified */
 	static constexpr int DFLT_QOS = 0;

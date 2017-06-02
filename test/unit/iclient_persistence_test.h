@@ -233,7 +233,7 @@ TEST_F(iclient_persistence_test, test_persistence_get) {
 	EXPECT_EQ(MQTTASYNC_SUCCESS,
 			cpt::persistence_get(handle_, const_cast<char*>(KEY), &buf, &buflen));
 
-	int n = PAYLOAD_LEN + PAYLOAD2_LEN + PAYLOAD3_LEN;
+	int n = static_cast<int>(PAYLOAD_LEN + PAYLOAD2_LEN + PAYLOAD3_LEN);
 	string str { PAYLOAD };
 	str += PAYLOAD2;
 	str += PAYLOAD3;

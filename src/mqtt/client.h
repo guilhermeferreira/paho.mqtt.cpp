@@ -35,7 +35,7 @@ namespace mqtt {
  * Lightweight client for talking to an MQTT server using methods that block
  * until an operation completes.
  */
-class client : private callback
+class DLLExport client : private callback
 {
 	/** An arbitrary, but relatively long timeout */
 	static const std::chrono::minutes DFLT_TIMEOUT;

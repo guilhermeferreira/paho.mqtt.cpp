@@ -39,7 +39,7 @@ class iasync_client;
 /**
  * Represents a topic destination, used for publish/subscribe messaging.
  */
-class topic
+class DLLExport topic
 {
 	/** The client to which this topic is connected */
 	iasync_client& cli_;

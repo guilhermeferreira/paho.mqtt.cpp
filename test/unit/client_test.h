@@ -397,7 +397,7 @@ TEST_F(client_test, test_subscribe_many_topics_2_args_failure) {
 
 	try {
 		cli.subscribe(TOPIC_COLL, BAD_QOS_COLL);
-	} catch (std::invalid_argument& ex) {}
+	} catch (std::invalid_argument&) {}
 
 	int reason_code = MQTTASYNC_SUCCESS;
 	try {

@@ -24,6 +24,7 @@
 #ifndef __mqtt_string_collection_h
 #define __mqtt_string_collection_h
 
+#include "MQTTAsync.h"
 #include "mqtt/types.h"
 #include <vector>
 #include <memory>
@@ -37,7 +38,7 @@ namespace mqtt {
  * This acts like a collection of strings but carries an array of pointers
  * to the C strings for easy interactions with the Paho C library.
  */
-class string_collection
+class DLLExport string_collection
 {
 	/** The type for the collection of strings */
 	using collection_type = std::vector<string>;
