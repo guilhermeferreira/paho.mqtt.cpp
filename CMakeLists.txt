@@ -45,9 +45,9 @@ set(CPACK_PACKAGE_VERSION_PATCH ${PAHO_VERSION_PATCH})
 set(PAHO_BUILD_STATIC FALSE CACHE BOOL "Build static library")
 set(PAHO_BUILD_SAMPLES FALSE CACHE BOOL "Build sample programs")
 set(PAHO_BUILD_DOCUMENTATION FALSE CACHE BOOL "Create and install the HTML based API documentation (requires Doxygen)")
-set(PAHO_MQTT_C_PATH "" CACHE PATH "Add a path to paho.mqtt.c library and headers")
+set(PAHO_MQTT_C_PATH "" CACHE PATH "Add a path to Paho MQTT C library and headers")
 set(PAHO_MQTT_C paho-mqtt3a)
-SET(PAHO_WITH_SSL TRUE CACHE BOOL "Flag that defines whether to build ssl-enabled binaries too. ")
+set(PAHO_WITH_SSL TRUE CACHE BOOL "Flag that defines whether to build ssl-enabled binaries too. ")
 
 include(CMakePahoMqttC)
 
