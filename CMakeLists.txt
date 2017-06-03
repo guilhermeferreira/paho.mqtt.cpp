@@ -24,6 +24,8 @@ project("paho-mqtt-cpp" LANGUAGES CXX)
 
 ## library name
 set(PAHO_MQTT_CPP paho-mqttpp3)
+## static library name
+set(PAHO_MQTT_CPP_STATIC ${PAHO_MQTT_CPP}-static)
 
 ## build modules
 set(CMAKE_SCRIPTS "${CMAKE_SOURCE_DIR}/cmake")

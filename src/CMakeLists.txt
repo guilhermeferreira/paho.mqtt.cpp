@@ -83,16 +83,16 @@ install(TARGETS ${PAHO_MQTT_CPP}
 ## build static version of the Paho MQTT C++ library
 if(PAHO_BUILD_STATIC)
     ## create the static library
-    add_library(${PAHO_MQTT_CPP}-static STATIC
+    add_library(${PAHO_MQTT_CPP_STATIC} STATIC
         $<TARGET_OBJECTS:common_obj>)
 
     ## add dependencies to the static library
-    target_link_libraries(${PAHO_MQTT_CPP}-static
+    target_link_libraries(${PAHO_MQTT_CPP_STATIC}
         ${LIBS_SYSTEM}
         ${PAHO_MQTT_C_LIB})
 
     ## install the static library
-    install(TARGETS ${PAHO_MQTT_CPP}-static
+    install(TARGETS ${PAHO_MQTT_CPP_STATIC}
         ARCHIVE DESTINATION lib
         LIBRARY DESTINATION lib)
 endif()
